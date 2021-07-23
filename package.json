@@ -1,8 +1,8 @@
 {
-  "name": "msw_remote_gimbal",
+  "name": "msw_lte_rc",
   "version": "1.0.0",
   "description": "",
-  "main": "msw_remote_gimbal.js",
+  "main": "msw_lte_rc.js",
   "dependencies": {
     "keypress": "^0.2.1",
     "mqtt": "^4.2.8",
@@ -14,12 +14,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IoTKETI/msw_remote_gimbal.git"
+    "url": "git+https://github.com/IoTKETI/msw_lte_rc.git"
   },
   "author": "Wonseok Jung",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/IoTKETI/msw_remote_gimbal/issues"
+    "url": "https://github.com/IoTKETI/msw_lte_rc/issues"
   },
-  "homepage": "https://github.com/IoTKETI/msw_remote_gimbal#readme"
+  "homepage": "https://github.com/IoTKETI/msw_lte_rc#readme"
 }
