@@ -15,85 +15,76 @@ global.ch_min_val = 223; // 00 DF
 global.ch_mid_val = 1023; // 03 FF
 global.ch_max_val = 1823; // 07 1F
 
-global.ch_gap = 20;
+global.ch_gap = 100;
 // data_range_each_CH = 0~2047
 
-// const RC = 0;
+const RC = 0;
 const GIMBAL = 1;
 
-global.REMOTE_FLAG = GIMBAL;
+global.REMOTE_FLAG = RC;
 
 let TIMEOUT = 50;
 
 function key_to_signal(ch_num, ch_val) {
     try {
-        if (ch_num === 1) {
+        if (ch_num === 1) {  // Roll
             ch1_target_val = ch_val;
-            // ch1_key(ch_val);
-        } else if (ch_num === 2) {
+        } else if (ch_num === 2) {  // Pitch
             ch2_target_val = ch_val;
-            // ch2_key(ch_val);  // Tilt UP/DOWN
-        } else if (ch_num === 3) {
+        } else if (ch_num === 3) {// Throttle
             ch3_target_val = ch_val;
-            // ch3_key(ch_val);
-        } else if (ch_num === 4) {
+        } else if (ch_num === 4) {  // Yaw
             ch4_target_val = ch_val;
-            // ch4_key(ch_val);  // Pan Right/LEFT
-        } else if (ch_num === 5) {
+        } else if (ch_num === 5) {  // LED
             ch5_target_val = ch_val;
-            // ch5_key(ch_val);  // Operation Mode
-        } else if (ch_num === 6) {
+        } else if (ch_num === 6) {  // Arm/Disarm
             ch6_target_val = ch_val;
-            // ch6_key(ch_val);  // Tilt Rate
-        } else if (ch_num === 7) {
+        } else if (ch_num === 7) {  // RTL
             ch7_target_val = ch_val;
-            // ch7_key(ch_val);  // Pan Rate
-        } else if (ch_num === 8) {
+        } else if (ch_num === 8) {  // AUTO
             ch8_target_val = ch_val;
-            // ch8_key(ch_val);
-        } else if (ch_num === 9) {
+        } else if (ch_num === 9) {  // Mode (Loiter, PosHold, AltHold)
             ch9_target_val = ch_val;
-            // ch9_key(ch_val);  // CAMERA ZOOM
         } else if (ch_num === 10) {
             ch10_target_val = ch_val;
-            // ch10_key(ch_val);
-        } else if (ch_num === 11) {
+        } else if (ch_num === 11) {  // Landing Gear
             ch11_target_val = ch_val;
-            // ch11_key(ch_val);  // CAMERA REC
         } else if (ch_num === 12) {
             ch12_target_val = ch_val;
-            // ch12_key(ch_val);  // CAMERA POWER
         } else if (ch_num === 13) {
             ch13_target_val = ch_val;
-            // ch13_key(ch_val);
         } else if (ch_num === 14) {
             ch14_target_val = ch_val;
-            // ch14_key(ch_val);
         } else if (ch_num === 15) {
             ch15_target_val = ch_val;
-            // ch15_key(ch_val);
         } else if (ch_num === 16) {
             ch16_target_val = ch_val;
-            // ch16_key(ch_val);
         } else {
             ch17_key();
 
-            ch2 = parseInt(ch_mid_val);
-            ch4 = parseInt(ch_mid_val);
-            ch9 = parseInt(ch_mid_val);
+            if (REMOTE_FLAG === RC) {
+                ch1 = parseInt(ch_mid_val);
+                ch2 = parseInt(ch_mid_val);
+                ch3 = parseInt(ch_mid_val);
+                ch4 = parseInt(ch_mid_val);
+            } else if (REMOTE_FLAG === GIMBAL) {
+                ch2 = parseInt(ch_mid_val);
+                ch4 = parseInt(ch_mid_val);
+                ch9 = parseInt(ch_mid_val);
+            }
         }
     } catch (e) {
         ch1 = parseInt(ch_mid_val);
         ch2 = parseInt(ch_mid_val);
         ch3 = parseInt(ch_mid_val);
         ch4 = parseInt(ch_mid_val);
-        ch5 = parseInt(ch_mid_val); // operation mode
+        ch5 = parseInt(ch_max_val);
         ch6 = parseInt(ch_min_val);
         ch7 = parseInt(ch_min_val);
         ch8 = parseInt(ch_min_val);
-        ch9 = parseInt(ch_mid_val);
+        ch9 = parseInt(ch_min_val);
         ch10 = parseInt(ch_min_val);
-        ch11 = parseInt(ch_mid_val);
+        ch11 = parseInt(ch_min_val);
         ch12 = parseInt(ch_min_val);
         ch13 = parseInt(ch_min_val);
         ch14 = parseInt(ch_min_val);
@@ -118,13 +109,13 @@ global.ch1 = parseInt(ch_mid_val);
 global.ch2 = parseInt(ch_mid_val);
 global.ch3 = parseInt(ch_mid_val);
 global.ch4 = parseInt(ch_mid_val);
-global.ch5 = parseInt(ch_mid_val);
+global.ch5 = parseInt(ch_max_val);
 global.ch6 = parseInt(ch_min_val);
 global.ch7 = parseInt(ch_min_val);
 global.ch8 = parseInt(ch_min_val);
-global.ch9 = parseInt(ch_mid_val);
+global.ch9 = parseInt(ch_min_val);
 global.ch10 = parseInt(ch_min_val);
-global.ch11 = parseInt(ch_mid_val);
+global.ch11 = parseInt(ch_min_val);
 global.ch12 = parseInt(ch_min_val);
 global.ch13 = parseInt(ch_min_val);
 global.ch14 = parseInt(ch_min_val);
@@ -136,13 +127,13 @@ global.ch1_target_val = parseInt(ch_mid_val);
 global.ch2_target_val = parseInt(ch_mid_val);
 global.ch3_target_val = parseInt(ch_mid_val);
 global.ch4_target_val = parseInt(ch_mid_val);
-global.ch5_target_val = parseInt(ch_mid_val);
+global.ch5_target_val = parseInt(ch_max_val);
 global.ch6_target_val = parseInt(ch_min_val);
 global.ch7_target_val = parseInt(ch_min_val);
 global.ch8_target_val = parseInt(ch_min_val);
-global.ch9_target_val = parseInt(ch_mid_val);
+global.ch9_target_val = parseInt(ch_min_val);
 global.ch10_target_val = parseInt(ch_min_val);
-global.ch11_target_val = parseInt(ch_mid_val);
+global.ch11_target_val = parseInt(ch_min_val);
 global.ch12_target_val = parseInt(ch_min_val);
 global.ch13_target_val = parseInt(ch_min_val);
 global.ch14_target_val = parseInt(ch_min_val);
@@ -151,8 +142,6 @@ global.ch16_target_val = parseInt(ch_min_val);
 global.ch17_target_val = parseInt(330);
 
 function channel_val() {
-    // console.log('ch1: ', ch1, 'ch2: ', ch2, 'ch3: ', ch3, 'ch4: ', ch4);
-
     rxbuf = '';
     rxbuf += 'C0';
     rxbuf += 'D0';
@@ -645,3 +634,5 @@ function lib_mqtt_connect(broker_ip, port) {
         console.log(err.message);
     });
 }
+
+// pkg lib_remote_gimbal.js --target node14-linux-armv6
