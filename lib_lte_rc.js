@@ -15,7 +15,7 @@ global.ch_min_val = 223; // 00 DF
 global.ch_mid_val = 1023; // 03 FF
 global.ch_max_val = 1823; // 07 1F
 
-global.ch_gap = 100;
+global.ch_gap = 20;
 // data_range_each_CH = 0~2047
 
 const RC = 0;
