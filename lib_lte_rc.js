@@ -577,15 +577,15 @@ function sbusPortData(data) {
 let lib;
 
 try {
-    lib = JSON.parse(fs.readFileSync('./' + config.directory_name + '/lib_sparrow_gun.json', 'utf8'));
+    lib = JSON.parse(fs.readFileSync('./' + config.directory_name + '/lib_lte_rc.json', 'utf8'));
 } catch (e) {
     lib = {
-        name: 'lib_remote_gimbal',
+        name: 'lib_lte_rc',
         target: 'armv6',
         description: "node [name] [portnum] [baudrate]",
-        scripts: 'node lib_remote_gimbal /dev/ttyUSB3 115200',
+        scripts: 'node lib_lte_rc /dev/ttyUSB5 115200',
         data: ['SBUS'],
-        control: ['REMOTE']
+        control: ['REMOTE','STATUS']
     };
 }
 
