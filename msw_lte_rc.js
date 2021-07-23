@@ -54,7 +54,7 @@ try {
         name: 'lib_lte_rc',
         target: 'armv6',
         description: "node [name] [portnum] [baudrate]",
-        scripts: 'node lib_lte_rc /dev/ttyUSB5 115200',
+        scripts: 'node lib_lte_rc /dev/ttyUSB3 115200',
         data: ['SBUS'],
         control: ['REMOTE', 'STATUS']
     };
