@@ -143,7 +143,7 @@ function init() {
                 for (let param_idx in jostick_params) {
                     if (jostick_params.hasOwnProperty(param_idx)) {
                         command_delay++;
-                        setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, 201, jostick_params[param_idx]);
+                        setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, 251, jostick_params[param_idx]);
                     }
                 }
                 if (msw_mqtt_client != null) {
