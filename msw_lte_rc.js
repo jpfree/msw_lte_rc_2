@@ -78,6 +78,8 @@ status_topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' +
 
 let muv_sub_gcs_topic = '/Mobius/' + config.gcs + '/GCS_Data/' + config.drone;
 
+const jostick_params = ['RC1_MAX', 'RC1_MIN', 'RC1_TRIM', 'RC2_MAX', 'RC2_MIN', 'RC2_TRIM', 'RC3_MAX', 'RC3_MIN', 'RC3_TRIM', 'RC4_MAX', 'RC4_MIN', 'RC4_TRIM']
+
 function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
     const mavlinkParser = new MAVLink(null/*logger*/, src_sys_id, src_comp_id);
     try {
@@ -136,7 +138,7 @@ function init() {
         for (let idx in config.lib) {
             if (config.lib.hasOwnProperty(idx)) {
                 // if (rc_map.)
-                send_param_get_command(config.drone, muv_sub_gcs_topic, 201, 'RC3_TRIM');
+                send_param_get_command(config.drone, muv_sub_gcs_topic, 201, jostick_params[8]);
                 setTimeout(function (){
                     console.log(rc3_trim)
                 }, 3000);
