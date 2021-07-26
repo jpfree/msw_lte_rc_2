@@ -76,10 +76,41 @@ let status_topic = '';
 remote_topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' + config.name + '/' + config.lib[0].control[0];
 status_topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' + config.name + '/' + config.lib[0].control[1];
 
+let muv_sub_gcs_topic = '/Mobius/' + config.gcs + '/GCS_Data/' + config.drone;
+
+let rc3_trim = {};
+
+function send_param_get_command(target_name, pub_topic, target_sys_id, param_id) {
+    var btn_params = {};
+    btn_params.target_system = target_sys_id;
+    btn_params.target_component = 1;
+    btn_params.param_id = param_id;
+    btn_params.param_index = -1;
+
+    try {
+        var msg = mavlinkGenerateMessage(255, 0xbe, mavlink.MAVLINK_MSG_ID_PARAM_REQUEST_READ, btn_params);
+        if (msg == null) {
+            console.log("mavlink message is null");
+        }
+        else {
+            console.log('send req msg');
+            MSW_mobius_mqtt_client.publish(pub_topic, msg);
+        }
+    }
+    catch (ex) {
+        console.log('[ERROR] ' + ex);
+    }
+}
+
 function init() {
     if (config.lib.length > 0) {
         for (let idx in config.lib) {
             if (config.lib.hasOwnProperty(idx)) {
+                // if (rc_map.)
+                send_param_get_command(config.drone, muv_sub_gcs_topic, 201, 'RC3_TRIM');
+                setTimeout(function (){
+                    console.log(rc3_trim)
+                }, 3000);
                 if (msw_mqtt_client != null) {
                     for (let i = 0; i < config.lib[idx].control.length; i++) {
                         let sub_container_name = config.lib[idx].control[i];

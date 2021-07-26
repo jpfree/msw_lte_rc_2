@@ -24,6 +24,7 @@ const GIMBAL = 1;
 global.REMOTE_FLAG = RC;
 
 let TIMEOUT = 50;
+setInterval(channel_val, TIMEOUT);
 
 function key_to_signal(ch_num, ch_val) {
     try {
@@ -98,10 +99,6 @@ function key_to_signal(ch_num, ch_val) {
 function ch17_key() {
     ch17 = Math.floor(Math.random() * (347 - 325 + 1)) + 325;
 }
-
-
-setInterval(channel_val, TIMEOUT);
-
 
 global.rxbuf = '';
 
