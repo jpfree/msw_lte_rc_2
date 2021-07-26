@@ -80,6 +80,37 @@ let muv_sub_gcs_topic = '/Mobius/' + config.gcs + '/GCS_Data/' + config.drone;
 
 let rc3_trim = {};
 
+function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
+    const mavlinkParser = new MAVLink(null/*logger*/, src_sys_id, src_comp_id);
+    try {
+        var mavMsg = null;
+        var genMsg = null;
+        //var targetSysId = sysId;
+        var targetCompId = (params.targetCompId == undefined) ?
+            0 :
+            params.targetCompId;
+
+        switch (type) {
+            case mavlink.MAVLINK_MSG_ID_PARAM_REQUEST_READ:
+                mavMsg = new mavlink.messages.param_request_read(params.target_system,
+                    params.target_component,
+                    params.param_id,
+                    params.param_index);
+                break;
+        }
+    }
+    catch (e) {
+        console.log('MAVLINK EX:' + e);
+    }
+
+    if (mavMsg) {
+        genMsg = Buffer.from(mavMsg.pack(mavlinkParser));
+        //console.log('>>>>> MAVLINK OUTGOING MSG: ' + genMsg.toString('hex'));
+    }
+
+    return genMsg;
+}
+
 function send_param_get_command(target_name, pub_topic, target_sys_id, param_id) {
     var btn_params = {};
     btn_params.target_system = target_sys_id;
