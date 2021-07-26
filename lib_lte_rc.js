@@ -25,7 +25,7 @@ global.REMOTE_FLAG = RC;
 
 let TIMEOUT = 50;
 
-console.log(config.drone + ' RC_MAP_VALUE = \n', rc_map);
+console.log(drone_info.drone + ' RC_MAP_VALUE = \n', rc_map);
 
 function key_to_signal(ch_num, ch_val) {
     try {
