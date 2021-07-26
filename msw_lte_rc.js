@@ -82,14 +82,10 @@ const jostick_params = ['RC1_MAX', 'RC1_MIN', 'RC1_TRIM', 'RC2_MAX', 'RC2_MIN', 
 
 function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
     const mavlinkParser = new MAVLink(null/*logger*/, src_sys_id, src_comp_id);
-    try {
-        var mavMsg = null;
-        var genMsg = null;
-        //var targetSysId = sysId;
-        var targetCompId = (params.targetCompId == undefined) ?
-            0 :
-            params.targetCompId;
+    let genMsg = null;
+    let mavMsg = null;
 
+    try {
         switch (type) {
             case mavlink.MAVLINK_MSG_ID_PARAM_REQUEST_READ:
                 mavMsg = new mavlink.messages.param_request_read(params.target_system,
@@ -98,37 +94,33 @@ function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
                     params.param_index);
                 break;
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.log('MAVLINK EX:' + e);
     }
 
     if (mavMsg) {
         genMsg = Buffer.from(mavMsg.pack(mavlinkParser));
-        //console.log('>>>>> MAVLINK OUTGOING MSG: ' + genMsg.toString('hex'));
     }
 
     return genMsg;
 }
 
 function send_param_get_command(target_name, pub_topic, target_sys_id, param_id) {
-    var btn_params = {};
+    let btn_params = {};
     btn_params.target_system = target_sys_id;
     btn_params.target_component = 1;
     btn_params.param_id = param_id;
     btn_params.param_index = -1;
 
     try {
-        var msg = mavlinkGenerateMessage(255, 0xbe, mavlink.MAVLINK_MSG_ID_PARAM_REQUEST_READ, btn_params);
+        let msg = mavlinkGenerateMessage(255, 0xbe, mavlink.MAVLINK_MSG_ID_PARAM_REQUEST_READ, btn_params);
         if (msg == null) {
             console.log("mavlink message is null");
-        }
-        else {
+        } else {
             console.log('send req msg');
             MSW_mobius_mqtt_client.publish(pub_topic, msg);
         }
-    }
-    catch (ex) {
+    } catch (ex) {
         console.log('[ERROR] ' + ex);
     }
 }
@@ -139,13 +131,14 @@ function init() {
     if (config.lib.length > 0) {
         for (let idx in config.lib) {
             if (config.lib.hasOwnProperty(idx)) {
-                // if (rc_map.)
+                // Request RC PARAM
                 for (let param_idx in jostick_params) {
                     if (jostick_params.hasOwnProperty(param_idx)) {
                         command_delay++;
-                        setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, 251, jostick_params[param_idx]);
+                        setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, jostick_params[param_idx]);
                     }
                 }
+
                 if (msw_mqtt_client != null) {
                     for (let i = 0; i < config.lib[idx].control.length; i++) {
                         let sub_container_name = config.lib[idx].control[i];

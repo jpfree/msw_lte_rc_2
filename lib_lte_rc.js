@@ -26,6 +26,8 @@ global.REMOTE_FLAG = RC;
 let TIMEOUT = 50;
 setInterval(channel_val, TIMEOUT);
 
+console.log(config.drone + ' RC_MAP_VALUE = \n', rc_map);
+
 function key_to_signal(ch_num, ch_val) {
     try {
         if (ch_num === 1) {  // Roll
