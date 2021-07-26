@@ -25,7 +25,11 @@ global.REMOTE_FLAG = RC;
 
 let TIMEOUT = 50;
 
-console.log(drone_info.drone + ' RC_MAP_VALUE = \n', rc_map);
+console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
+
+function roll_normalizer(val) {
+    return ((val - roll_min) / (roll_max - roll_min)) * (ch_value_max - ch_value_min) + ch_value_min;
+}
 
 function key_to_signal(ch_num, ch_val) {
     try {
