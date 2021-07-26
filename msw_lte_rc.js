@@ -131,7 +131,7 @@ function init() {
     if (config.lib.length > 0) {
         for (let idx in config.lib) {
             if (config.lib.hasOwnProperty(idx)) {
-                // Request RC PARAM
+                // Request RC PARAMs
                 for (let param_idx in jostick_params) {
                     if (jostick_params.hasOwnProperty(param_idx)) {
                         command_delay++;

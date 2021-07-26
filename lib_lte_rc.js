@@ -24,25 +24,6 @@ const GIMBAL = 1;
 global.REMOTE_FLAG = RC;
 
 let TIMEOUT = 50;
-setInterval(channel_val, TIMEOUT);
-
-global.ch1_target_val = parseInt(ch_mid_val);
-global.ch2_target_val = parseInt(ch_mid_val);
-global.ch3_target_val = parseInt(ch_mid_val);
-global.ch4_target_val = parseInt(ch_mid_val);
-global.ch5_target_val = parseInt(ch_max_val);
-global.ch6_target_val = parseInt(ch_min_val);
-global.ch7_target_val = parseInt(ch_min_val);
-global.ch8_target_val = parseInt(ch_min_val);
-global.ch9_target_val = parseInt(ch_min_val);
-global.ch10_target_val = parseInt(ch_min_val);
-global.ch11_target_val = parseInt(ch_min_val);
-global.ch12_target_val = parseInt(ch_min_val);
-global.ch13_target_val = parseInt(ch_min_val);
-global.ch14_target_val = parseInt(ch_min_val);
-global.ch15_target_val = parseInt(ch_min_val);
-global.ch16_target_val = parseInt(ch_min_val);
-global.ch17_target_val = parseInt(330);
 
 console.log(config.drone + ' RC_MAP_VALUE = \n', rc_map);
 
@@ -119,6 +100,8 @@ function key_to_signal(ch_num, ch_val) {
 function ch17_key() {
     ch17 = Math.floor(Math.random() * (347 - 325 + 1)) + 325;
 }
+
+setInterval(channel_val, TIMEOUT);
 
 global.rxbuf = '';
 
