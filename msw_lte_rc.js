@@ -78,8 +78,6 @@ status_topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' +
 
 let muv_sub_gcs_topic = '/Mobius/' + config.gcs + '/GCS_Data/' + config.drone;
 
-let rc3_trim = {};
-
 function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
     const mavlinkParser = new MAVLink(null/*logger*/, src_sys_id, src_comp_id);
     try {
