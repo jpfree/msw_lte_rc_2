@@ -30,7 +30,7 @@ console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 let SBUS_OFFSET = 988;
 
 function rc2sbus(val) {
-    return ((val - SBUS_OFFSET) * 2)
+    return ((val - 700) * 1.27875)
 }
 
 function ch1_normalizer(val) {
