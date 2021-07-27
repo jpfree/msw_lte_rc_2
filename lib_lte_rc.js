@@ -27,20 +27,29 @@ let TIMEOUT = 50;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
-function roll_normalizer(val) {
-    return ((val - roll_min) / (roll_max - roll_min)) * (ch_value_max - ch_value_min) + ch_value_min;
+function ch1_normalizer(val) {
+    return ((val - ch1_min) / (ch1_max - ch1_min)) * (ch1_max - ch1_min) + ch1_min;
+}
+function ch2_normalizer(val) {
+    return ((val - ch2_min) / (ch2_max - ch2_min)) * (ch2_max - ch2_min) + ch2_min;
+}
+function ch3_normalizer(val) {
+    return ((val - ch3_min) / (ch3_max - ch3_min)) * (ch3_max - ch3_min) + ch3_min;
+}
+function ch4_normalizer(val) {
+    return ((val - ch4_min) / (ch4_max - ch4_min)) * (ch4_max - ch4_min) + ch4_min;
 }
 
 function key_to_signal(ch_num, ch_val) {
     try {
         if (ch_num === 1) {  // Roll
-            ch1_target_val = parseInt(ch_val);
+            ch1_target_val = ch1_normalizer(parseInt(ch_val));
         } else if (ch_num === 2) {  // Pitch
-            ch2_target_val = parseInt(ch_val);
+            ch2_target_val = ch2_normalizer(parseInt(ch_val));
         } else if (ch_num === 3) {// Throttle
-            ch3_target_val = parseInt(ch_val);
+            ch3_target_val = ch3_normalizer(parseInt(ch_val));
         } else if (ch_num === 4) {  // Yaw
-            ch4_target_val = parseInt(ch_val);
+            ch4_target_val = ch4_normalizer(parseInt(ch_val));
         } else if (ch_num === 5) {  // LED
             ch5_target_val = parseInt(ch_val);
         } else if (ch_num === 6) {  // Arm/Disarm
