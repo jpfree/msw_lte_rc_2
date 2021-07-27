@@ -27,17 +27,26 @@ let TIMEOUT = 50;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
+let SBUS_OFFSET = 988;
+
+function rc2sbus(val) {
+    return ((val - SBUS_OFFSET) * 2)
+}
+
 function ch1_normalizer(val) {
-    return ((val - ch1_min) / (ch1_max - ch1_min)) * (ch1_max - ch1_min) + ch1_min;
+    return ((val - rc2sbus(ch1_min)) / (rc2sbus(ch1_max) - rc2sbus(ch1_min))) * (rc2sbus(ch1_max) - rc2sbus(ch1_min)) + rc2sbus(ch1_min);
 }
+
 function ch2_normalizer(val) {
-    return ((val - ch2_min) / (ch2_max - ch2_min)) * (ch2_max - ch2_min) + ch2_min;
+    return ((val - rc2sbus(ch2_min)) / (rc2sbus(ch2_max) - rc2sbus(ch2_min))) * (rc2sbus(ch2_max) - rc2sbus(ch2_min)) + rc2sbus(ch2_min);
 }
+
 function ch3_normalizer(val) {
-    return ((val - ch3_min) / (ch3_max - ch3_min)) * (ch3_max - ch3_min) + ch3_min;
+    return ((val - rc2sbus(ch3_min)) / (rc2sbus(ch3_max) - rc2sbus(ch3_min))) * (rc2sbus(ch3_max) - rc2sbus(ch3_min)) + rc2sbus(ch3_min);
 }
+
 function ch4_normalizer(val) {
-    return ((val - ch4_min) / (ch4_max - ch4_min)) * (ch4_max - ch4_min) + ch4_min;
+    return ((val - rc2sbus(ch4_min)) / (rc2sbus(ch4_max) - rc2sbus(ch4_min))) * (rc2sbus(ch4_max) - rc2sbus(ch4_min)) + rc2sbus(ch4_min);
 }
 
 function key_to_signal(ch_num, ch_val) {
@@ -417,7 +426,7 @@ try {
         description: "node [name] [portnum] [baudrate]",
         scripts: 'node lib_lte_rc /dev/ttyUSB5 115200',
         data: ['SBUS'],
-        control: ['REMOTE','STATUS']
+        control: ['REMOTE', 'STATUS']
     };
 }
 
