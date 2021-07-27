@@ -34,55 +34,59 @@ function rc2sbus(val) {
 }
 
 function ch1_normalizer(val) {
-    return ((val - rc2sbus(ch1_min)) / (rc2sbus(ch1_max) - rc2sbus(ch1_min))) * (rc2sbus(ch1_max) - rc2sbus(ch1_min)) + rc2sbus(ch1_min);
+    return rc2sbus(val * (rc_map.rc1_max - rc_map.rc1_min) + rc_map.rc1_min);
 }
 
 function ch2_normalizer(val) {
-    return ((val - rc2sbus(ch2_min)) / (rc2sbus(ch2_max) - rc2sbus(ch2_min))) * (rc2sbus(ch2_max) - rc2sbus(ch2_min)) + rc2sbus(ch2_min);
+    return rc2sbus(val * (rc_map.rc2_max - rc_map.rc2_min) + rc_map.rc2_min);
 }
 
 function ch3_normalizer(val) {
-    return ((val - rc2sbus(ch3_min)) / (rc2sbus(ch3_max) - rc2sbus(ch3_min))) * (rc2sbus(ch3_max) - rc2sbus(ch3_min)) + rc2sbus(ch3_min);
+    return rc2sbus(val * (rc_map.rc3_max - rc_map.rc3_min) + rc_map.rc3_min);
 }
 
 function ch4_normalizer(val) {
-    return ((val - rc2sbus(ch4_min)) / (rc2sbus(ch4_max) - rc2sbus(ch4_min))) * (rc2sbus(ch4_max) - rc2sbus(ch4_min)) + rc2sbus(ch4_min);
+    return rc2sbus(val * (rc_map.rc4_max - rc_map.rc4_min) + rc_map.rc4_min);
+}
+
+function ch5_normalizer(val) {
+    return rc2sbus(val * (rc_map.rc5_max - rc_map.rc5_min) + rc_map.rc5_min);
 }
 
 function key_to_signal(ch_num, ch_val) {
     try {
         if (ch_num === 1) {  // Roll
-            ch1_target_val = ch1_normalizer(parseInt(ch_val));
+            ch1_target_val = parseInt(ch1_normalizer(ch_val));
         } else if (ch_num === 2) {  // Pitch
-            ch2_target_val = ch2_normalizer(parseInt(ch_val));
+            ch2_target_val = parseInt(ch2_normalizer(ch_val));
         } else if (ch_num === 3) {// Throttle
-            ch3_target_val = ch3_normalizer(parseInt(ch_val));
+            ch3_target_val = parseInt(ch3_normalizer(ch_val));
         } else if (ch_num === 4) {  // Yaw
-            ch4_target_val = ch4_normalizer(parseInt(ch_val));
+            ch4_target_val = parseInt(ch4_normalizer(ch_val));
         } else if (ch_num === 5) {  // LED
-            ch5_target_val = parseInt(ch_val);
+            ch5_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 6) {  // Arm/Disarm
-            ch6_target_val = parseInt(ch_val);
+            ch6_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 7) {  // RTL
-            ch7_target_val = parseInt(ch_val);
+            ch7_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 8) {  // AUTO
-            ch8_target_val = parseInt(ch_val);
+            ch8_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 9) {  // Mode (Loiter, PosHold, AltHold)
-            ch9_target_val = parseInt(ch_val);
+            ch9_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 10) {
-            ch10_target_val = parseInt(ch_val);
+            ch10_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 11) {  // Landing Gear
-            ch11_target_val = parseInt(ch_val);
+            ch11_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 12) {
-            ch12_target_val = parseInt(ch_val);
+            ch12_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 13) {
-            ch13_target_val = parseInt(ch_val);
+            ch13_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 14) {
-            ch14_target_val = parseInt(ch_val);
+            ch14_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 15) {
-            ch15_target_val = parseInt(ch_val);
+            ch15_target_val = parseInt(ch5_normalizer(ch_val));
         } else if (ch_num === 16) {
-            ch16_target_val = parseInt(ch_val);
+            ch16_target_val = parseInt(ch5_normalizer(ch_val));
         } else {
             ch17_key();
 
@@ -465,7 +469,7 @@ function lib_mqtt_connect(broker_ip, port) {
         if (topic === control_topic) {
             let obj_lib_data = JSON.parse(message);
             let ch_num = parseInt(obj_lib_data.num);
-            let ch_val = parseInt(obj_lib_data.value);
+            let ch_val = parseFloat(obj_lib_data.value);
 
             key_to_signal(ch_num, ch_val);
         }

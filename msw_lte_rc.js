@@ -78,7 +78,7 @@ status_topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' +
 
 let muv_sub_gcs_topic = '/Mobius/' + config.gcs + '/GCS_Data/' + config.drone;
 
-const jostick_params = ['RC1_MAX', 'RC1_MIN', 'RC1_TRIM', 'RC2_MAX', 'RC2_MIN', 'RC2_TRIM', 'RC3_MAX', 'RC3_MIN', 'RC3_TRIM', 'RC4_MAX', 'RC4_MIN', 'RC4_TRIM']
+const jostick_params = ['RC1_MAX', 'RC1_MIN', 'RC1_TRIM', 'RC2_MAX', 'RC2_MIN', 'RC2_TRIM', 'RC3_MAX', 'RC3_MIN', 'RC3_TRIM', 'RC4_MAX', 'RC4_MIN', 'RC4_TRIM', 'RC5_MAX', 'RC5_MIN', 'RC5_TRIM']
 
 function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
     const mavlinkParser = new MAVLink(null/*logger*/, src_sys_id, src_comp_id);
@@ -242,13 +242,13 @@ function msw_mqtt_connect(broker_ip, port) {
 }
 
 function on_receive_from_muv(topic, str_message) {
-    console.log('[' + topic + '] ' + str_message);
+    // console.log('[' + topic + '] ' + str_message);
 
     parseControlMission(topic, str_message);
 }
 
 function on_receive_from_lib(topic, str_message) {
-    console.log('[' + topic + '] ' + str_message);
+    // console.log('[' + topic + '] ' + str_message);
 
     parseDataMission(topic, str_message);
 }
