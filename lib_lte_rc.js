@@ -11,9 +11,12 @@ let sbusPort = null;
 let sbusPortNum = libPort;
 let sbusBaudrate = libBaudrate;
 
-global.ch_min_val = 223; // 00 DF
-global.ch_mid_val = 1023; // 03 FF
-global.ch_max_val = 1823; // 07 1F
+// global.ch_min_val = 223; // 00 DF
+// global.ch_mid_val = 1023; // 03 FF
+// global.ch_max_val = 1823; // 07 1F
+global.ch_min_val = 350; // PWM: 1094
+global.ch_mid_val = 1023; // PWM: 1513
+global.ch_max_val = 1696; // PWM: 1934
 
 global.ch_gap = 20;
 // data_range_each_CH = 0~2047
@@ -27,66 +30,71 @@ let TIMEOUT = 50;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
-let SBUS_OFFSET = 988;
+// let SBUS_OFFSET = 988;
+//
+// function rc2sbus(val) {
+//     // return ((val - SBUS_OFFSET) * 2)
+//     return ((val - 700) * 1.27875)
+// }
 
-function rc2sbus(val) {
-    return ((val - 700) * 1.27875)
-}
+// function ch1_normalizer(val) {
+//     return rc2sbus(val * (rc_map.rc1_max - rc_map.rc1_min) + rc_map.rc1_min);
+// }
+//
+// function ch2_normalizer(val) {
+//     return rc2sbus(val * (rc_map.rc2_max - rc_map.rc2_min) + rc_map.rc2_min);
+// }
+//
+// function ch3_normalizer(val) {
+//     return rc2sbus(val * (rc_map.rc3_max - rc_map.rc3_min) + rc_map.rc3_min);
+// }
+//
+// function ch4_normalizer(val) {
+//     return rc2sbus(val * (rc_map.rc4_max - rc_map.rc4_min) + rc_map.rc4_min);
+// }
+//
+// function ch5_normalizer(val) {
+//     return rc2sbus(val * (rc_map.rc5_max - rc_map.rc5_min) + rc_map.rc5_min);
+// }
 
-function ch1_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc1_max - rc_map.rc1_min) + rc_map.rc1_min);
-}
-
-function ch2_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc2_max - rc_map.rc2_min) + rc_map.rc2_min);
-}
-
-function ch3_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc3_max - rc_map.rc3_min) + rc_map.rc3_min);
-}
-
-function ch4_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc4_max - rc_map.rc4_min) + rc_map.rc4_min);
-}
-
-function ch5_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc5_max - rc_map.rc5_min) + rc_map.rc5_min);
+function normalizer(val) {
+    return Math.round(val * (ch_max_val - ch_min_val) + ch_min_val);
 }
 
 function key_to_signal(ch_num, ch_val) {
     try {
         if (ch_num === 1) {  // Roll
-            ch1_target_val = parseInt(ch1_normalizer(ch_val));
+            ch1_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 2) {  // Pitch
-            ch2_target_val = parseInt(ch2_normalizer(ch_val));
+            ch2_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 3) {// Throttle
-            ch3_target_val = parseInt(ch3_normalizer(ch_val));
+            ch3_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 4) {  // Yaw
-            ch4_target_val = parseInt(ch4_normalizer(ch_val));
+            ch4_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 5) {  // LED
-            ch5_target_val = parseInt(ch5_normalizer(ch_val));
+            ch5_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 6) {  // Arm/Disarm
-            ch6_target_val = parseInt(ch5_normalizer(ch_val));
+            ch6_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 7) {  // RTL
-            ch7_target_val = parseInt(ch5_normalizer(ch_val));
+            ch7_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 8) {  // AUTO
-            ch8_target_val = parseInt(ch5_normalizer(ch_val));
+            ch8_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 9) {  // Mode (Loiter, PosHold, AltHold)
-            ch9_target_val = parseInt(ch5_normalizer(ch_val));
+            ch9_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 10) {
-            ch10_target_val = parseInt(ch5_normalizer(ch_val));
+            ch10_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 11) {  // Landing Gear
-            ch11_target_val = parseInt(ch5_normalizer(ch_val));
+            ch11_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 12) {
-            ch12_target_val = parseInt(ch5_normalizer(ch_val));
+            ch12_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 13) {
-            ch13_target_val = parseInt(ch5_normalizer(ch_val));
+            ch13_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 14) {
-            ch14_target_val = parseInt(ch5_normalizer(ch_val));
+            ch14_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 15) {
-            ch15_target_val = parseInt(ch5_normalizer(ch_val));
+            ch15_target_val = parseInt(normalizer(ch_val));
         } else if (ch_num === 16) {
-            ch16_target_val = parseInt(ch5_normalizer(ch_val));
+            ch16_target_val = parseInt(normalizer(ch_val));
         } else {
             ch17_key();
 
