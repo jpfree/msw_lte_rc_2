@@ -29,31 +29,6 @@ global.REMOTE_FLAG = RC;
 
 let TIMEOUT = 50;
 
-try {
-    if (rc_map.hasOwnProperty(rc1_max)) {
-
-    }
-} catch (e) {
-    console.log('RC_PARAMS is not defiend');
-    rc_map.rc1_min = 202;
-    rc_map.rc1_max = 1802;
-    rc_map.rc1_trim = 1002;
-    rc_map.rc2_min = 202;
-    rc_map.rc2_max = 1802;
-    rc_map.rc2_trim = 1002;
-    rc_map.rc3_min = 202;
-    rc_map.rc3_max = 1802;
-    rc_map.rc3_trim = 1002;
-    rc_map.rc4_min = 202;
-    rc_map.rc4_max = 1802;
-    rc_map.rc4_trim = 1002;
-    rc_map.rc5_min = 202;
-    rc_map.rc5_max = 1802;
-    rc_map.rc5_trim = 1002;
-    rc_map.rc6_min = 202;
-    rc_map.rc6_max = 1802;
-    rc_map.rc6_trim = 1002;
-}
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
 let sbus_module_value = JSON.parse(fs.readFileSync('./' + msw_dir_name + '/sbus_module_value(pwm).json', 'utf8'));
