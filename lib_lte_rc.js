@@ -6,6 +6,10 @@ let mqtt = require('mqtt');
 let fs = require('fs');
 let SerialPort = require('serialport');
 
+let my_lib_name = 'lib_lte_rc';
+
+let msw_dir_name = (my_lib_name.replace('lib', 'msw') + '_' + my_lib_name.replace('lib', 'msw'));
+
 let sbusPort = null;
 
 let sbusPortNum = libPort;
@@ -14,9 +18,6 @@ let sbusBaudrate = libBaudrate;
 global.ch_min_val = 0; // 00 DF
 global.ch_mid_val = 1024; // 03 FF
 global.ch_max_val = 2047; // 07 1F
-
-// let rc_max_sbus = 1696;
-// let rc_min_sbus = 256;
 
 global.ch_gap = 20;
 // data_range_each_CH = 0~2047
@@ -30,7 +31,7 @@ let TIMEOUT = 30;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
-let sbus_module_value = JSON.parse(fs.readFileSync('sbus_module_value(pwm).json', 'utf8'));
+let sbus_module_value = JSON.parse(fs.readFileSync('./' + msw_dir_name + '/sbus_module_value(pwm).json', 'utf8'));
 
 function min_max_scaler(val) {
     return Math.round(val * (ch_max_val - ch_min_val) + ch_min_val);
