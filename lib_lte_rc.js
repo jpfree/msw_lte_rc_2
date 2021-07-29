@@ -29,10 +29,12 @@ global.REMOTE_FLAG = RC;
 
 let TIMEOUT = 50;
 
-if (rc_map.hasOwnProperty(rc1_max)){
+try {
+    if (rc_map.hasOwnProperty(rc1_max)) {
 
-}
-else{
+    }
+} catch (e) {
+    console.log('RC_PARAMS is not defiend');
     rc_map.rc1_min = 202;
     rc_map.rc1_max = 1802;
     rc_map.rc1_trim = 1002;
