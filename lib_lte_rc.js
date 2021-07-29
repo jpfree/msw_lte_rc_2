@@ -81,10 +81,10 @@ function key_to_signal(ch_num, ch_val) {
             }
         } else if (ch_num === 6) {  // Arm/Disarm
             ch6_target_val = min_max_scaler(ch_val);
-            if (ch6_target_val > sbus_module_value[rc_map.rc4_max]) {
-                ch6_target_val = sbus_module_value[rc_map.rc4_max];
-            } else if (ch6_target_val < rsbus_module_value[rc_map.rc4_min]) {
-                ch6_target_val = sbus_module_value[rc_map.rc4_min];
+            if (ch6_target_val > sbus_module_value[rc_map.rc6_max]) {
+                ch6_target_val = sbus_module_value[rc_map.rc6_max];
+            } else if (ch6_target_val < rsbus_module_value[rc_map.rc6_min]) {
+                ch6_target_val = sbus_module_value[rc_map.rc6_min];
             } else {
             }
         } else if (ch_num === 7) {  // RTL
