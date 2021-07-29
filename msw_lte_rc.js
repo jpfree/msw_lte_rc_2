@@ -78,7 +78,12 @@ status_topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' +
 
 let muv_sub_gcs_topic = '/Mobius/' + config.gcs + '/GCS_Data/' + config.drone;
 
-const jostick_params = ['RC1_MAX', 'RC1_MIN', 'RC1_TRIM', 'RC2_MAX', 'RC2_MIN', 'RC2_TRIM', 'RC3_MAX', 'RC3_MIN', 'RC3_TRIM', 'RC4_MAX', 'RC4_MIN', 'RC4_TRIM', 'RC5_MAX', 'RC5_MIN', 'RC5_TRIM']
+const jostick_params = ['RC1_MAX', 'RC1_MIN', 'RC1_TRIM', 'RC2_MAX', 'RC2_MIN', 'RC2_TRIM', 'RC3_MAX', 'RC3_MIN',
+    'RC3_TRIM', 'RC4_MAX', 'RC4_MIN', 'RC4_TRIM', 'RC5_MAX', 'RC5_MIN', 'RC5_TRIM', 'RC6_MAX', 'RC6_MIN', 'RC6_TRIM',
+    'RC7_MAX', 'RC7_MIN', 'RC7_TRIM', 'RC8_MAX', 'RC8_MIN', 'RC8_TRIM', 'RC9_MAX', 'RC9_MIN', 'RC9_TRIM', 'RC10_MAX',
+    'RC10_MIN', 'RC10_TRIM', 'RC11_MAX', 'RC11_MIN', 'RC11_TRIM', 'RC12_MAX', 'RC12_MIN', 'RC12_TRIM', 'RC13_MAX',
+    'RC13_MIN', 'RC13_TRIM', 'RC14_MAX', 'RC14_MIN', 'RC14_TRIM', 'RC15_MAX', 'RC15_MIN', 'RC15_TRIM', 'RC16_MAX',
+    'RC16_MIN', 'RC16_TRIM']
 
 function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
     const mavlinkParser = new MAVLink(null/*logger*/, src_sys_id, src_comp_id);
