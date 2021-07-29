@@ -11,9 +11,12 @@ let sbusPort = null;
 let sbusPortNum = libPort;
 let sbusBaudrate = libBaudrate;
 
-global.ch_min_val = 223; // 00 DF
-global.ch_mid_val = 1023; // 03 FF
-global.ch_max_val = 1823; // 07 1F
+global.ch_min_val = 0; // 00 DF
+global.ch_mid_val = 1024; // 03 FF
+global.ch_max_val = 2047; // 07 1F
+
+// let rc_max_sbus = 1696;
+// let rc_min_sbus = 256;
 
 global.ch_gap = 20;
 // data_range_each_CH = 0~2047
@@ -23,71 +26,146 @@ const GIMBAL = 1;
 
 global.REMOTE_FLAG = RC;
 
-let TIMEOUT = 50;
+let TIMEOUT = 30;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
-let SBUS_OFFSET = 988;
+let sbus_module_value = JSON.parse(fs.readFileSync('sbus_module_value(pwm).json', 'utf8'));
 
-function rc2sbus(val) {
-    // return ((val - SBUS_OFFSET) * 2)
-    return ((val - 700) * 1.27875)
-}
-
-function ch1_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc1_max - rc_map.rc1_min) + rc_map.rc1_min);
-}
-
-function ch2_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc2_max - rc_map.rc2_min) + rc_map.rc2_min);
-}
-
-function ch3_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc3_max - rc_map.rc3_min) + rc_map.rc3_min);
-}
-
-function ch4_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc4_max - rc_map.rc4_min) + rc_map.rc4_min);
-}
-
-function ch5_normalizer(val) {
-    return rc2sbus(val * (rc_map.rc5_max - rc_map.rc5_min) + rc_map.rc5_min);
+function min_max_scaler(val) {
+    return Math.round(val * (ch_max_val - ch_min_val) + ch_min_val);
 }
 
 function key_to_signal(ch_num, ch_val) {
     try {
         if (ch_num === 1) {  // Roll
-            ch1_target_val = parseInt(ch1_normalizer(ch_val));
+            ch1_target_val = min_max_scaler(ch_val);
+            if (ch1_target_val > sbus_module_value[rc_map.rc1_max]) {
+                ch1_target_val = sbus_module_value[rc_map.rc1_max];
+            } else if (ch1_target_val < sbus_module_value[rc_map.rc1_min]) {
+                ch1_target_val = sbus_module_value[rc_map.rc1_min];
+            } else {
+            }
         } else if (ch_num === 2) {  // Pitch
-            ch2_target_val = parseInt(ch2_normalizer(ch_val));
+            ch2_target_val = min_max_scaler(ch_val);
+            if (ch2_target_val > sbus_module_value[rc_map.rc2_max]) {
+                ch2_target_val = sbus_module_value[rc_map.rc2_max];
+            } else if (ch2_target_val < sbus_module_value[rc_map.rc2_min]) {
+                ch2_target_val = sbus_module_value[rc_map.rc2_min];
+            } else {
+            }
         } else if (ch_num === 3) {// Throttle
-            ch3_target_val = parseInt(ch3_normalizer(ch_val));
+            ch3_target_val = min_max_scaler(ch_val);
+            if (ch3_target_val > sbus_module_value[rc_map.rc3_max]) {
+                ch3_target_val = sbus_module_value[rc_map.rc3_max];
+            } else if (ch3_target_val < sbus_module_value[rc_map.rc3_min]) {
+                ch3_target_val = sbus_module_value[rc_map.rc3_min];
+            } else {
+            }
         } else if (ch_num === 4) {  // Yaw
-            ch4_target_val = parseInt(ch4_normalizer(ch_val));
+            ch4_target_val = min_max_scaler(ch_val);
+            if (ch4_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch4_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch4_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch4_target_val = sbus_module_value[rc_map.rc4_min];
+            } else {
+            }
         } else if (ch_num === 5) {  // LED
-            ch5_target_val = parseInt(ch5_normalizer(ch_val));
+            ch5_target_val = min_max_scaler(ch_val);
+            if (ch5_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch5_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch5_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch5_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 6) {  // Arm/Disarm
-            ch6_target_val = parseInt(ch5_normalizer(ch_val));
+            ch6_target_val = min_max_scaler(ch_val);
+            if (ch6_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch6_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch6_target_val < rsbus_module_value[rc_map.rc5_min]) {
+                ch6_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 7) {  // RTL
-            ch7_target_val = parseInt(ch5_normalizer(ch_val));
+            ch7_target_val = min_max_scaler(ch_val);
+            if (ch7_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch7_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch7_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch7_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 8) {  // AUTO
-            ch8_target_val = parseInt(ch5_normalizer(ch_val));
+            ch8_target_val = min_max_scaler(ch_val);
+            if (ch8_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch8_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch8_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch8_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 9) {  // Mode (Loiter, PosHold, AltHold)
-            ch9_target_val = parseInt(ch5_normalizer(ch_val));
+            ch9_target_val = min_max_scaler(ch_val);
+            if (ch9_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch9_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch9_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch9_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 10) {
-            ch10_target_val = parseInt(ch5_normalizer(ch_val));
+            ch10_target_val = min_max_scaler(ch_val);
+            if (ch10_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch10_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch10_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch10_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 11) {  // Landing Gear
-            ch11_target_val = parseInt(ch5_normalizer(ch_val));
+            ch15_target_val = min_max_scaler(ch_val);
+            if (ch11_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch11_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch11_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch11_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 12) {
-            ch12_target_val = parseInt(ch5_normalizer(ch_val));
+            ch12_target_val = min_max_scaler(ch_val);
+            if (ch12_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch12_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch12_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch12_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 13) {
-            ch13_target_val = parseInt(ch5_normalizer(ch_val));
+            ch13_target_val = min_max_scaler(ch_val);
+            if (ch13_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch13_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch13_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch13_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 14) {
-            ch14_target_val = parseInt(ch5_normalizer(ch_val));
+            ch14_target_val = min_max_scaler(ch_val);
+            if (ch14_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch14_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch14_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch14_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 15) {
-            ch15_target_val = parseInt(ch5_normalizer(ch_val));
+            ch15_target_val = min_max_scaler(ch_val);
+            if (ch15_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch15_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch15_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch15_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else if (ch_num === 16) {
-            ch16_target_val = parseInt(ch5_normalizer(ch_val));
+            ch16_target_val = min_max_scaler(ch_val);
+            if (ch16_target_val > sbus_module_value[rc_map.rc5_max]) {
+                ch16_target_val = sbus_module_value[rc_map.rc5_max];
+            } else if (ch16_target_val < sbus_module_value[rc_map.rc5_min]) {
+                ch16_target_val = sbus_module_value[rc_map.rc5_min];
+            } else {
+            }
         } else {
             ch17_key();
 
@@ -471,7 +549,6 @@ function lib_mqtt_connect(broker_ip, port) {
             let obj_lib_data = JSON.parse(message);
             let ch_num = parseInt(obj_lib_data.num);
             let ch_val = parseFloat(obj_lib_data.value);
-
             key_to_signal(ch_num, ch_val);
         }
     });
