@@ -73,10 +73,10 @@ function key_to_signal(ch_num, ch_val) {
             }
         } else if (ch_num === 5) {  // LED
             ch5_target_val = min_max_scaler(ch_val);
-            if (ch5_target_val > sbus_module_value[rc_map.rc5_max]) {
-                ch5_target_val = sbus_module_value[rc_map.rc5_max];
-            } else if (ch5_target_val < sbus_module_value[rc_map.rc5_min]) {
-                ch5_target_val = sbus_module_value[rc_map.rc5_min];
+            if (ch5_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch5_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch5_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch5_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 6) {  // Arm/Disarm
@@ -89,82 +89,82 @@ function key_to_signal(ch_num, ch_val) {
             }
         } else if (ch_num === 7) {  // RTL
             ch7_target_val = min_max_scaler(ch_val);
-            if (ch7_target_val > sbus_module_value[rc_map.rc7_max]) {
-                ch7_target_val = sbus_module_value[rc_map.rc7_max];
-            } else if (ch7_target_val < sbus_module_value[rc_map.rc7_min]) {
-                ch7_target_val = sbus_module_value[rc_map.rc7_min];
+            if (ch7_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch7_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch7_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch7_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 8) {  // AUTO
             ch8_target_val = min_max_scaler(ch_val);
-            if (ch8_target_val > sbus_module_value[rc_map.rc8_max]) {
-                ch8_target_val = sbus_module_value[rc_map.rc8_max];
-            } else if (ch8_target_val < sbus_module_value[rc_map.rc8_min]) {
-                ch8_target_val = sbus_module_value[rc_map.rc8_min];
+            if (ch8_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch8_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch8_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch8_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 9) {  // Mode (Loiter, PosHold, AltHold)
             ch9_target_val = min_max_scaler(ch_val);
-            if (ch9_target_val > sbus_module_value[rc_map.rc9_max]) {
-                ch9_target_val = sbus_module_value[rc_map.rc9_max];
-            } else if (ch9_target_val < sbus_module_value[rc_map.rc9_min]) {
-                ch9_target_val = sbus_module_value[rc_map.rc9_min];
+            if (ch9_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch9_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch9_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch9_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 10) {
             ch10_target_val = min_max_scaler(ch_val);
-            if (ch10_target_val > sbus_module_value[rc_map.rc10_max]) {
-                ch10_target_val = sbus_module_value[rc_map.rc10_max];
-            } else if (ch10_target_val < sbus_module_value[rc_map.rc10_min]) {
-                ch10_target_val = sbus_module_value[rc_map.rc10_min];
+            if (ch10_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch10_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch10_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch10_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 11) {  // Landing Gear
             ch15_target_val = min_max_scaler(ch_val);
-            if (ch11_target_val > sbus_module_value[rc_map.rc11_max]) {
-                ch11_target_val = sbus_module_value[rc_map.rc11_max];
-            } else if (ch11_target_val < sbus_module_value[rc_map.rc11_min]) {
-                ch11_target_val = sbus_module_value[rc_map.rc11_min];
+            if (ch11_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch11_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch11_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch11_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 12) {
             ch12_target_val = min_max_scaler(ch_val);
-            if (ch12_target_val > sbus_module_value[rc_map.rc12_max]) {
-                ch12_target_val = sbus_module_value[rc_map.rc12_max];
-            } else if (ch12_target_val < sbus_module_value[rc_map.rc12_min]) {
-                ch12_target_val = sbus_module_value[rc_map.rc12_min];
+            if (ch12_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch12_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch12_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch12_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 13) {
             ch13_target_val = min_max_scaler(ch_val);
-            if (ch13_target_val > sbus_module_value[rc_map.rc13_max]) {
-                ch13_target_val = sbus_module_value[rc_map.rc13_max];
-            } else if (ch13_target_val < sbus_module_value[rc_map.rc13_min]) {
-                ch13_target_val = sbus_module_value[rc_map.rc13_min];
+            if (ch13_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch13_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch13_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch13_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 14) {
             ch14_target_val = min_max_scaler(ch_val);
-            if (ch14_target_val > sbus_module_value[rc_map.rc14_max]) {
-                ch14_target_val = sbus_module_value[rc_map.rc14_max];
-            } else if (ch14_target_val < sbus_module_value[rc_map.rc14_min]) {
-                ch14_target_val = sbus_module_value[rc_map.rc14_min];
+            if (ch14_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch14_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch14_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch14_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 15) {
             ch15_target_val = min_max_scaler(ch_val);
-            if (ch15_target_val > sbus_module_value[rc_map.rc15_max]) {
-                ch15_target_val = sbus_module_value[rc_map.rc15_max];
-            } else if (ch15_target_val < sbus_module_value[rc_map.rc15_min]) {
-                ch15_target_val = sbus_module_value[rc_map.rc15_min];
+            if (ch15_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch15_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch15_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch15_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 16) {
             ch16_target_val = min_max_scaler(ch_val);
-            if (ch16_target_val > sbus_module_value[rc_map.rc16_max]) {
-                ch16_target_val = sbus_module_value[rc_map.rc16_max];
-            } else if (ch16_target_val < sbus_module_value[rc_map.rc16_min]) {
-                ch16_target_val = sbus_module_value[rc_map.rc16_min];
+            if (ch16_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch16_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch16_target_val < sbus_module_value[rc_map.rc4_min]) {
+                ch16_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else {

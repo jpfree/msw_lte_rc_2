@@ -138,6 +138,32 @@ function init() {
                         setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, jostick_params[param_idx]);
                     }
                 }
+                if (rc_map.hasOwnProperty('rc1_max')) {
+                } else if (rc_map.hasOwnProperty('rc1_min')) {
+                } else if (rc_map.hasOwnProperty('rc1_trim')) {
+                } else if (rc_map.hasOwnProperty('rc2_max')) {
+                } else if (rc_map.hasOwnProperty('rc2_min')) {
+                } else if (rc_map.hasOwnProperty('rc2_trim')) {
+                } else if (rc_map.hasOwnProperty('rc3_max')) {
+                } else if (rc_map.hasOwnProperty('rc3_min')) {
+                } else if (rc_map.hasOwnProperty('rc3_trim')) {
+                } else if (rc_map.hasOwnProperty('rc4_max')) {
+                } else if (rc_map.hasOwnProperty('rc4_min')) {
+                } else if (rc_map.hasOwnProperty('rc4_trim')) {
+                } else if (rc_map.hasOwnProperty('rc5_max')) {
+                } else if (rc_map.hasOwnProperty('rc5_min')) {
+                } else if (rc_map.hasOwnProperty('rc5_trim')) {
+                } else if (rc_map.hasOwnProperty('rc6_max')) {
+                } else if (rc_map.hasOwnProperty('rc6_min')) {
+                } else if (rc_map.hasOwnProperty('rc6_trim')) {
+                } else {
+                    for (let param_idx in jostick_params) {
+                        if (jostick_params.hasOwnProperty(param_idx)) {
+                            command_delay++;
+                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, jostick_params[param_idx]);
+                        }
+                    }
+                }
 
                 if (msw_mqtt_client != null) {
                     for (let i = 0; i < config.lib[idx].control.length; i++) {
