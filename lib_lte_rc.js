@@ -27,7 +27,7 @@ const GIMBAL = 1;
 
 global.REMOTE_FLAG = RC;
 
-let TIMEOUT = 50;
+let TIMEOUT = 40;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
