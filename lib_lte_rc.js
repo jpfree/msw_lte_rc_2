@@ -81,10 +81,10 @@ function key_to_signal(ch_num, ch_val) {
             }
         } else if (ch_num === 6) {  // Arm/Disarm
             ch6_target_val = min_max_scaler(ch_val);
-            if (ch6_target_val > sbus_module_value[rc_map.rc6_max]) {
-                ch6_target_val = sbus_module_value[rc_map.rc6_max];
-            } else if (ch6_target_val < rsbus_module_value[rc_map.rc6_min]) {
-                ch6_target_val = sbus_module_value[rc_map.rc6_min];
+            if (ch6_target_val > sbus_module_value[rc_map.rc4_max]) {
+                ch6_target_val = sbus_module_value[rc_map.rc4_max];
+            } else if (ch6_target_val < rsbus_module_value[rc_map.rc4_min]) {
+                ch6_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
         } else if (ch_num === 7) {  // RTL
@@ -389,7 +389,7 @@ function channel_val() {
     rxbuf += ch15_low_byte;
 
     // Switch 12
-    ch1 = ch1_target_val;
+    ch1 = ch16_target_val;
     hex_ch16 = ch16.toString(16);
     hex_ch16 = hex_ch16.padStart(4, '0');
     let ch16_high_byte = hex_ch16.substr(0, 2);
@@ -508,7 +508,7 @@ try {
         name: 'lib_lte_rc',
         target: 'armv6',
         description: "node [name] [portnum] [baudrate]",
-        scripts: 'node lib_lte_rc /dev/ttyUSB5 115200',
+        scripts: 'node lib_lte_rc /dev/ttyUSB3 115200',
         data: ['SBUS'],
         control: ['REMOTE', 'STATUS']
     };
