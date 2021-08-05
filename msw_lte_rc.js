@@ -117,7 +117,6 @@ function send_param_get_command(target_name, pub_topic, target_sys_id, param_id)
         if (msg == null) {
             console.log("mavlink message is null");
         } else {
-            console.log('send req msg');
             MSW_mobius_mqtt_client.publish(pub_topic, msg);
         }
     } catch (ex) {
@@ -240,6 +239,10 @@ function msw_mqtt_connect(broker_ip, port) {
                 console.log('[msw_mqtt_connect] msw_sub_fc_topic[' + idx + ']: ' + msw_sub_fc_topic[idx]);
             }
         }
+        if (status_topic !== '') {
+            MSW_mobius_mqtt_client.subscribe(status_topic);
+            console.log('[msw_mqtt_connect] status_topic : ' + status_topic);
+        }
     });
 
     msw_mqtt_client.on('message', function (topic, message) {
@@ -259,6 +262,18 @@ function msw_mqtt_connect(broker_ip, port) {
                     break;
                 }
             }
+        }
+
+        if (topic === status_topic) {
+            if (message.toString() === 'ON') {
+                MSW_mobius_mqtt_client.subscribe(remote_topic);
+                console.log('[msw_mobius_mqtt_subscribe] remote_topic : ' + remote_topic);
+            } else if (message.toString() === 'OFF') {
+                MSW_mobius_mqtt_client.unsubscribe(remote_topic);
+                console.log('[msw_mobius_mqtt_unsubscribe] remote_topic : ' + remote_topic);
+            }
+        } else if (topic === remote_topic) {
+            on_receive_from_muv(topic, message.toString());
         }
     });
 
