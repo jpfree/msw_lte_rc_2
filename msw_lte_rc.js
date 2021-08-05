@@ -240,7 +240,7 @@ function msw_mqtt_connect(broker_ip, port) {
             }
         }
         if (status_topic !== '') {
-            MSW_mobius_mqtt_client.subscribe(status_topic);
+            msw_mqtt_client.subscribe(status_topic);
             console.log('[msw_mqtt_connect] status_topic : ' + status_topic);
         }
     });
@@ -266,10 +266,10 @@ function msw_mqtt_connect(broker_ip, port) {
 
         if (topic === status_topic) {
             if (message.toString() === 'ON') {
-                MSW_mobius_mqtt_client.subscribe(remote_topic);
+                msw_mqtt_client.subscribe(remote_topic);
                 console.log('[msw_mobius_mqtt_subscribe] remote_topic : ' + remote_topic);
             } else if (message.toString() === 'OFF') {
-                MSW_mobius_mqtt_client.unsubscribe(remote_topic);
+                msw_mqtt_client.unsubscribe(remote_topic);
                 console.log('[msw_mobius_mqtt_unsubscribe] remote_topic : ' + remote_topic);
             }
         } else if (topic === remote_topic) {
