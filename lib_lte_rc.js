@@ -388,6 +388,10 @@ function channel_val() {
     ch2 = parseInt(ch_mid_val);
     ch3 = parseInt(ch_mid_val);
     ch4 = parseInt(ch_mid_val);
+    ch1_target_val = min_max_scaler(0.5);
+    ch2_target_val = min_max_scaler(0.5);
+    ch3_target_val = min_max_scaler(0.5);
+    ch4_target_val = min_max_scaler(0.5);
     sbusData();
 }
 
