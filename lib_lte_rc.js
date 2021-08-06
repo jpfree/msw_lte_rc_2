@@ -168,18 +168,6 @@ function key_to_signal(ch_num, ch_val) {
             } else {
             }
         } else {
-            ch17_key();
-
-            if (REMOTE_FLAG === RC) {
-                ch1 = parseInt(ch_mid_val);
-                ch2 = parseInt(ch_mid_val);
-                ch3 = parseInt(ch_mid_val);
-                ch4 = parseInt(ch_mid_val);
-            } else if (REMOTE_FLAG === GIMBAL) {
-                ch2 = parseInt(ch_mid_val);
-                ch4 = parseInt(ch_mid_val);
-                ch9 = parseInt(ch_mid_val);
-            }
         }
     } catch (e) {
         ch1 = parseInt(ch_mid_val);
@@ -200,11 +188,6 @@ function key_to_signal(ch_num, ch_val) {
         ch16 = parseInt(ch_min_val);
         ch17 = parseInt(330);
     }
-}
-
-
-function ch17_key() {
-    ch17 = Math.floor(Math.random() * (347 - 325 + 1)) + 325;
 }
 
 setInterval(channel_val, TIMEOUT);
@@ -407,6 +390,11 @@ function channel_val() {
 
     sbusPort.write(Buffer.from(rxbuf, 'hex'));
     sbusData();
+    ch1 = parseInt(ch_mid_val);
+    ch2 = parseInt(ch_mid_val);
+    ch3 = parseInt(ch_mid_val);
+    ch4 = parseInt(ch_mid_val);
+
 }
 
 function checksum_extra() {
