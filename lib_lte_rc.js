@@ -22,11 +22,6 @@ global.ch_max_val = 2047; // 07 1F
 global.ch_gap = 20;
 // data_range_each_CH = 0~2047
 
-const RC = 0;
-const GIMBAL = 1;
-
-global.REMOTE_FLAG = RC;
-
 let TIMEOUT = 40;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
@@ -389,12 +384,11 @@ function channel_val() {
     checksum_extra();
 
     sbusPort.write(Buffer.from(rxbuf, 'hex'));
-    sbusData();
     ch1 = parseInt(ch_mid_val);
     ch2 = parseInt(ch_mid_val);
     ch3 = parseInt(ch_mid_val);
     ch4 = parseInt(ch_mid_val);
-
+    sbusData();
 }
 
 function checksum_extra() {
