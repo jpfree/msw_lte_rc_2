@@ -271,14 +271,14 @@ function msw_mqtt_connect(broker_ip, port) {
             if (message.toString() === 'ON') {
                 if (status_flag === 0) {
                     msw_mqtt_client.subscribe(remote_topic);
-                    console.log('[msw_mobius_mqtt_subscribe] remote_topic : ' + remote_topic);
+                    console.log('[msw_mqtt_connect] remote_topic : ' + remote_topic);
                     status_flag = 1;
                 } else {
                 }
             } else if (message.toString() === 'OFF') {
                 if (status_flag === 1) {
                     msw_mqtt_client.unsubscribe(remote_topic);
-                    console.log('[msw_mobius_mqtt_unsubscribe] remote_topic : ' + remote_topic);
+                    console.log('[msw_mqtt_connect] remote_topic : ' + remote_topic);
                     status_flag = 0;
                 } else {
                 }
