@@ -269,11 +269,17 @@ function msw_mqtt_connect(broker_ip, port) {
 
         if (topic === status_topic) {
             if (message.toString() === 'ON') {
-                msw_mqtt_client.subscribe(remote_topic);
-                console.log('[msw_mobius_mqtt_subscribe] remote_topic : ' + remote_topic);
+                if (status_flag === 0) {
+                    MSW_mobius_mqtt_client.subscribe(remote_topic);
+                    console.log('[msw_mobius_mqtt_subscribe] remote_topic : ' + remote_topic);
+                } else {
+                }
             } else if (message.toString() === 'OFF') {
-                msw_mqtt_client.unsubscribe(remote_topic);
-                console.log('[msw_mobius_mqtt_unsubscribe] remote_topic : ' + remote_topic);
+                if (status_flag === 1) {
+                    MSW_mobius_mqtt_client.unsubscribe(remote_topic);
+                    console.log('[msw_mobius_mqtt_unsubscribe] remote_topic : ' + remote_topic);
+                } else {
+                }
             }
         } else if (topic === remote_topic) {
             on_receive_from_muv(topic, message.toString());
