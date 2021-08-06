@@ -270,14 +270,16 @@ function msw_mqtt_connect(broker_ip, port) {
         if (topic === status_topic) {
             if (message.toString() === 'ON') {
                 if (status_flag === 0) {
-                    MSW_mobius_mqtt_client.subscribe(remote_topic);
+                    msw_mqtt_client.subscribe(remote_topic);
                     console.log('[msw_mobius_mqtt_subscribe] remote_topic : ' + remote_topic);
+                    status_flag = 1;
                 } else {
                 }
             } else if (message.toString() === 'OFF') {
                 if (status_flag === 1) {
-                    MSW_mobius_mqtt_client.unsubscribe(remote_topic);
+                    msw_mqtt_client.unsubscribe(remote_topic);
                     console.log('[msw_mobius_mqtt_unsubscribe] remote_topic : ' + remote_topic);
+                    status_flag = 0;
                 } else {
                 }
             }
@@ -405,12 +407,14 @@ function MSW_mobius_mqtt_connect(broker_ip, port) {
                     if (status_flag === 0) {
                         MSW_mobius_mqtt_client.subscribe(remote_topic);
                         console.log('[msw_mobius_mqtt_subscribe] remote_topic : ' + remote_topic);
+                        status_flag = 1;
                     } else {
                     }
                 } else if (message.toString() === 'OFF') {
                     if (status_flag === 1) {
                         MSW_mobius_mqtt_client.unsubscribe(remote_topic);
                         console.log('[msw_mobius_mqtt_unsubscribe] remote_topic : ' + remote_topic);
+                        status_flag = 0;
                     } else {
                     }
                 }
