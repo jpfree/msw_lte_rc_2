@@ -372,7 +372,7 @@ function channel_val() {
     rxbuf += ch15_low_byte;
 
     // Switch 12
-    ch1 = ch16_target_val;
+    ch16 = ch16_target_val;
     hex_ch16 = ch16.toString(16);
     hex_ch16 = hex_ch16.padStart(4, '0');
     let ch16_high_byte = hex_ch16.substr(0, 2);
