@@ -22,6 +22,9 @@ global.ch_max_val = 2047; // 07 1F
 global.ch_gap = 20;
 // data_range_each_CH = 0~2047
 
+global.check_ch_num = 0;
+global.check_ch_val = 0.0;
+
 let TIMEOUT = 40;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
@@ -228,6 +231,7 @@ global.ch16_target_val = parseInt(ch_min_val);
 global.ch17_target_val = parseInt(330);
 
 let count = 0;
+
 function channel_val() {
     rxbuf = '';
     rxbuf += 'C0';
@@ -389,21 +393,25 @@ function channel_val() {
     // console.log('ch1: ' + ch1, 'ch2: ' + ch2, 'ch3: ' + ch3, 'ch4: ' + ch4, 'ch5: ' + ch5, 'ch6: ' + ch6, 'ch7: ' + ch7,
     //     'ch8: ' + ch8, 'ch9: ' + ch9, 'ch10: ' + ch10, 'ch11: ' + ch11, 'ch12: ' + ch12, 'ch13: ' + ch13, 'ch14: ' + ch14,
     //     'ch15: ' + ch15, 'ch16: ' + ch16, 'ch17: ' + ch17)
-    if (((ch1_target_val < min_max_scaler(0.007)) && (ch1_target_val > min_max_scaler(-0.006))) || ((ch2_target_val < min_max_scaler(0.007)) && (ch2_target_val > min_max_scaler(-0.006))) || ((ch3_target_val < min_max_scaler(0.007)) && (ch3_target_val > min_max_scaler(-0.006))) || ((ch4_target_val < min_max_scaler(0.007)) && (ch4_target_val > min_max_scaler(-0.006)))) {
-        if (count >= 20) {
-            ch1 = parseInt(ch_mid_val);
-            ch2 = parseInt(ch_mid_val);
-            ch3 = parseInt(ch_mid_val);
-            ch4 = parseInt(ch_mid_val);
-            ch1_target_val = min_max_scaler(0);
-            ch2_target_val = min_max_scaler(0);
-            ch3_target_val = min_max_scaler(0);
-            ch4_target_val = min_max_scaler(0);
-            count = 0;
-        } else {
-            count++;
-        }
-    }
+    // if (check_ch_num === 1){
+    //     if (check_ch_val < 0.007)
+    // }
+    // if (((ch1_target_val < min_max_scaler(0.007)) && (ch1_target_val > min_max_scaler(-0.006))) || ((ch2_target_val < min_max_scaler(0.007)) && (ch2_target_val > min_max_scaler(-0.006))) || ((ch3_target_val < min_max_scaler(0.007)) && (ch3_target_val > min_max_scaler(-0.006))) || ((ch4_target_val < min_max_scaler(0.007)) && (ch4_target_val > min_max_scaler(-0.006)))) {
+    //     if (count >= 20) {
+    //         ch1 = parseInt(ch_mid_val);
+    //         ch2 = parseInt(ch_mid_val);
+    //         ch3 = parseInt(ch_mid_val);
+    //         ch4 = parseInt(ch_mid_val);
+    //         ch1_target_val = min_max_scaler(0);
+    //         ch2_target_val = min_max_scaler(0);
+    //         ch3_target_val = min_max_scaler(0);
+    //         ch4_target_val = min_max_scaler(0);
+    //         count = 0;
+    //     } else {
+    //         count++;
+    //     }
+    // } else {
+    // }
     sbusData();
 }
 
