@@ -78,7 +78,7 @@ status_topic = '/Mobius/' + config.gcs + '/Mission_Data/' + config.drone + '/' +
 
 let muv_sub_gcs_topic = '/Mobius/' + config.gcs + '/GCS_Data/' + config.drone;
 
-const jostick_params = ['RC1_MAX', 'RC1_MIN', 'RC1_TRIM', 'RC2_MAX', 'RC2_MIN', 'RC2_TRIM', 'RC3_MAX', 'RC3_MIN', 'RC3_TRIM', 'RC4_MAX', 'RC4_MIN', 'RC4_TRIM', 'RC5_MAX', 'RC5_MIN', 'RC5_TRIM', 'RC6_MAX', 'RC6_MIN', 'RC6_TRIM']
+const joystick_params = ['RC1_MAX', 'RC1_MIN', 'RC1_TRIM', 'RC1_REVERSED', 'RC2_MAX', 'RC2_MIN', 'RC2_TRIM', 'RC2_REVERSED', 'RC3_MAX', 'RC3_MIN', 'RC3_TRIM', 'RC3_REVERSED', 'RC4_MAX', 'RC4_MIN', 'RC4_TRIM', 'RC4_REVERSED', 'RC5_MAX', 'RC5_MIN', 'RC5_TRIM', 'RC6_MAX', 'RC6_MIN', 'RC6_TRIM']
 
 function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
     const mavlinkParser = new MAVLink(null/*logger*/, src_sys_id, src_comp_id);
@@ -93,6 +93,13 @@ function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
                     params.param_id,
                     params.param_index);
                 break;
+            case mavlink.MAVLINK_MSG_ID_PARAM_SET:
+                mavMsg = new mavlink.messages.param_set(params.target_system,
+                    params.target_component,
+                    params.param_id,
+                    params.param_value,
+                    params.param_type);
+                break;
         }
     } catch (e) {
         console.log('MAVLINK EX:' + e);
@@ -103,6 +110,26 @@ function mavlinkGenerateMessage(src_sys_id, src_comp_id, type, params) {
     }
 
     return genMsg;
+}
+
+function set_rc_reversed_param(target_name, pub_topic, target_sys_id, param_id) {
+    let btn_params = {};
+    btn_params.target_system = target_sys_id;
+    btn_params.target_component = 1;
+    btn_params.param_id = param_id;
+    btn_params.param_type = mavlink.MAV_PARAM_TYPE_INT8;
+    btn_params.param_value = 0;
+    try {
+        let msg = mavlinkGenerateMessage(255, 0xbe, mavlink.MAVLINK_MSG_ID_PARAM_SET, btn_params);
+        if (msg == null) {
+            console.log("mavlink message is null");
+        } else {
+            MSW_mobius_mqtt_client.publish(pub_topic, msg);
+        }
+        console.log(msg);
+    } catch (ex) {
+        console.log('[ERROR] ' + ex);
+    }
 }
 
 function send_param_get_command(target_name, pub_topic, target_sys_id, param_id) {
@@ -132,38 +159,44 @@ function init() {
         for (let idx in config.lib) {
             if (config.lib.hasOwnProperty(idx)) {
                 // Request RC PARAMs
-                for (let param_idx in jostick_params) {
-                    if (jostick_params.hasOwnProperty(param_idx)) {
+                for (let param_idx in joystick_params) {
+                    if (joystick_params.hasOwnProperty(param_idx)) {
                         command_delay++;
-                        setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, jostick_params[param_idx]);
+                        setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, joystick_params[param_idx]);
                     }
                 }
-                if (rc_map.hasOwnProperty('rc1_max')) {
-                } else if (rc_map.hasOwnProperty('rc1_min')) {
-                } else if (rc_map.hasOwnProperty('rc1_trim')) {
-                } else if (rc_map.hasOwnProperty('rc2_max')) {
-                } else if (rc_map.hasOwnProperty('rc2_min')) {
-                } else if (rc_map.hasOwnProperty('rc2_trim')) {
-                } else if (rc_map.hasOwnProperty('rc3_max')) {
-                } else if (rc_map.hasOwnProperty('rc3_min')) {
-                } else if (rc_map.hasOwnProperty('rc3_trim')) {
-                } else if (rc_map.hasOwnProperty('rc4_max')) {
-                } else if (rc_map.hasOwnProperty('rc4_min')) {
-                } else if (rc_map.hasOwnProperty('rc4_trim')) {
-                } else if (rc_map.hasOwnProperty('rc5_max')) {
-                } else if (rc_map.hasOwnProperty('rc5_min')) {
-                } else if (rc_map.hasOwnProperty('rc5_trim')) {
-                } else if (rc_map.hasOwnProperty('rc6_max')) {
-                } else if (rc_map.hasOwnProperty('rc6_min')) {
-                } else if (rc_map.hasOwnProperty('rc6_trim')) {
-                } else {
-                    for (let param_idx in jostick_params) {
-                        if (jostick_params.hasOwnProperty(param_idx)) {
+                setTimeout(function () {
+                    for (let param_idx in joystick_params) {
+                        if (rc_map.hasOwnProperty(joystick_params[param_idx].toLowerCase())) {
+                            // console.log(util.format('rc_map.[%s] = %d', joystick_params[param_idx].toLowerCase(), rc_map[joystick_params[param_idx].toLowerCase()]));
+                        } else {
+                            // console.log('one more send req message');
                             command_delay++;
-                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, jostick_params[param_idx]);
+                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, joystick_params[param_idx]);
                         }
                     }
-                }
+
+                    if (rc_map.rc1_reversed !== 0) {
+                        set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC1_REVERSED');
+                        send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC1_REVERSED');
+                    } else {
+                    }
+                    if (rc_map.rc2_reversed !== 0) {
+                        set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC2_REVERSED');
+                        send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC2_REVERSED');
+                    } else {
+                    }
+                    if (rc_map.rc3_reversed !== 0) {
+                        set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC3_REVERSED');
+                        send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC3_REVERSED');
+                    } else {
+                    }
+                    if (rc_map.rc4_reversed !== 0) {
+                        set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC4_REVERSED');
+                        send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC4_REVERSED');
+                    } else {
+                    }
+                }, 1000);
 
                 if (msw_mqtt_client != null) {
                     for (let i = 0; i < config.lib[idx].control.length; i++) {
