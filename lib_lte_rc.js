@@ -389,7 +389,7 @@ function channel_val() {
     // console.log('ch1: ' + ch1, 'ch2: ' + ch2, 'ch3: ' + ch3, 'ch4: ' + ch4, 'ch5: ' + ch5, 'ch6: ' + ch6, 'ch7: ' + ch7,
     //     'ch8: ' + ch8, 'ch9: ' + ch9, 'ch10: ' + ch10, 'ch11: ' + ch11, 'ch12: ' + ch12, 'ch13: ' + ch13, 'ch14: ' + ch14,
     //     'ch15: ' + ch15, 'ch16: ' + ch16, 'ch17: ' + ch17)
-    if (((ch1_target_val < 0.6) && (ch1_target_val > 0.4)) || ((ch2_target_val < 0.6) && (ch2_target_val > 0.4)) || ((ch3_target_val < 0.6) && (ch3_target_val > 0.4)) || ((ch4_target_val < 0.6) && (ch4_target_val > 0.4))) {
+    if (((ch1_target_val < 0.007) && (ch1_target_val > -0.006)) || ((ch2_target_val < 0.007) && (ch2_target_val > -0.006)) || ((ch3_target_val < 0.007) && (ch3_target_val > -0.006)) || ((ch4_target_val < 0.007) && (ch4_target_val > -0.006))) {
         if (count >= 20) {
             ch1 = parseInt(ch_mid_val);
             ch2 = parseInt(ch_mid_val);
