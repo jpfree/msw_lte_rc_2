@@ -230,6 +230,7 @@ global.ch15_target_val = parseInt(ch_min_val);
 global.ch16_target_val = parseInt(ch_min_val);
 global.ch17_target_val = parseInt(330);
 
+let count = 0;
 function channel_val() {
     rxbuf = '';
     rxbuf += 'C0';
@@ -392,7 +393,7 @@ function channel_val() {
     //     'ch8: ' + ch8, 'ch9: ' + ch9, 'ch10: ' + ch10, 'ch11: ' + ch11, 'ch12: ' + ch12, 'ch13: ' + ch13, 'ch14: ' + ch14,
     //     'ch15: ' + ch15, 'ch16: ' + ch16, 'ch17: ' + ch17)
     if (check_ch_num === 1) {
-        if ((0 < check_ch_val < 0.007) || ((-0.006) < check_ch_val < 0)) {
+        if (((0 < check_ch_val) && (check_ch_val < 0.007)) || (((-0.006) < check_ch_val) && (check_ch_val < 0))) {
             if (count >= 25) {
                 ch1 = parseInt(ch_mid_val);
                 ch1_target_val = min_max_scaler(0);
@@ -400,7 +401,35 @@ function channel_val() {
                 count++;
             }
         }
+    } else if (check_ch_num === 2) {
+        if (((0 < check_ch_val) && (check_ch_val < 0.007)) || (((-0.006) < check_ch_val) && (check_ch_val < 0))) {
+            if (count >= 25) {
+                ch2 = parseInt(ch_mid_val);
+                ch2_target_val = min_max_scaler(0);
+            } else {
+                count++;
+            }
+        }
+    } else if (check_ch_num === 3) {
+        if (((0 < check_ch_val) && (check_ch_val < 0.007)) || (((-0.006) < check_ch_val) && (check_ch_val < 0))) {
+            if (count >= 25) {
+                ch3 = parseInt(ch_mid_val);
+                ch3_target_val = min_max_scaler(0);
+            } else {
+                count++;
+            }
+        }
+    } else if (check_ch_num === 4) {
+        if (((0 < check_ch_val) && (check_ch_val < 0.007)) || (((-0.006) < check_ch_val) && (check_ch_val < 0))) {
+            if (count >= 25) {
+                ch4 = parseInt(ch_mid_val);
+                ch4_target_val = min_max_scaler(0);
+            } else {
+                count++;
+            }
+        }
     }
+
     // if (((ch1_target_val < min_max_scaler(0.007)) && (ch1_target_val > min_max_scaler(-0.006))) || ((ch2_target_val < min_max_scaler(0.007)) && (ch2_target_val > min_max_scaler(-0.006))) || ((ch3_target_val < min_max_scaler(0.007)) && (ch3_target_val > min_max_scaler(-0.006))) || ((ch4_target_val < min_max_scaler(0.007)) && (ch4_target_val > min_max_scaler(-0.006)))) {
     //     if (count >= 20) {
     //         ch1 = parseInt(ch_mid_val);
@@ -562,6 +591,8 @@ function lib_mqtt_connect(broker_ip, port) {
             let ch_num = parseInt(obj_lib_data.num);
             let ch_val = parseFloat(obj_lib_data.value);
             // console.log('ch_num - ' + ch_num, '\nch_val - ' + ch_val);
+            check_ch_num = ch_num;
+            check_ch_val = ch_val;
             key_to_signal(ch_num, ch_val);
         }
     });
