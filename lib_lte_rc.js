@@ -230,8 +230,6 @@ global.ch15_target_val = parseInt(ch_min_val);
 global.ch16_target_val = parseInt(ch_min_val);
 global.ch17_target_val = parseInt(330);
 
-let count = 0;
-
 function channel_val() {
     rxbuf = '';
     rxbuf += 'C0';
