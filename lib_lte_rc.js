@@ -70,7 +70,7 @@ function key_to_signal(ch_num, ch_val) {
                 ch4_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
-        } else if (ch_num === 5) {  // LED
+        } else if (ch_num === 5) {  // Mode (Loiter, PosHold, AltHold)
             ch5_target_val = min_max_scaler(ch_val);
             if (ch5_target_val > sbus_module_value[rc_map.rc4_max]) {
                 ch5_target_val = sbus_module_value[rc_map.rc4_max];
@@ -102,7 +102,7 @@ function key_to_signal(ch_num, ch_val) {
                 ch8_target_val = sbus_module_value[rc_map.rc4_min];
             } else {
             }
-        } else if (ch_num === 9) {  // Mode (Loiter, PosHold, AltHold)
+        } else if (ch_num === 9) {  // LED
             ch9_target_val = min_max_scaler(ch_val);
             if (ch9_target_val > sbus_module_value[rc_map.rc4_max]) {
                 ch9_target_val = sbus_module_value[rc_map.rc4_max];
@@ -556,6 +556,7 @@ function lib_mqtt_connect(broker_ip, port) {
             let obj_lib_data = JSON.parse(message);
             let ch_num = parseInt(obj_lib_data.num);
             let ch_val = parseFloat(obj_lib_data.value);
+            // console.log('ch_num - ' + ch_num, '\nch_val - ' + ch_val);
             key_to_signal(ch_num, ch_val);
         }
     });
