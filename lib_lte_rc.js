@@ -29,7 +29,8 @@ console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 let sbus_module_value = JSON.parse(fs.readFileSync('./' + msw_dir_name + '/sbus_module_value(pwm).json', 'utf8'));
 
 function min_max_scaler(val) {
-    return Math.round(val * (ch_max_val - ch_min_val) + ch_min_val);
+    let nor_val = (val - (-1)) / (1 - (-1));
+    return Math.round(nor_val * (ch_max_val - ch_min_val) + ch_min_val);
 }
 
 function key_to_signal(ch_num, ch_val) {
