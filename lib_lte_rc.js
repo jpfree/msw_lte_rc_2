@@ -231,6 +231,7 @@ global.ch16_target_val = parseInt(ch_min_val);
 global.ch17_target_val = parseInt(330);
 
 let count = 0;
+
 function channel_val() {
     rxbuf = '';
     rxbuf += 'C0';
@@ -400,6 +401,8 @@ function channel_val() {
             } else {
                 count++;
             }
+        } else {
+            count = 0;
         }
     } else if (check_ch_num === 2) {
         if (((0 < check_ch_val) && (check_ch_val < 0.007)) || (((-0.006) < check_ch_val) && (check_ch_val < 0))) {
@@ -409,6 +412,8 @@ function channel_val() {
             } else {
                 count++;
             }
+        } else {
+            count = 0;
         }
     } else if (check_ch_num === 3) {
         if (((0 < check_ch_val) && (check_ch_val < 0.007)) || (((-0.006) < check_ch_val) && (check_ch_val < 0))) {
@@ -418,6 +423,8 @@ function channel_val() {
             } else {
                 count++;
             }
+        } else {
+            count = 0;
         }
     } else if (check_ch_num === 4) {
         if (((0 < check_ch_val) && (check_ch_val < 0.007)) || (((-0.006) < check_ch_val) && (check_ch_val < 0))) {
@@ -427,6 +434,8 @@ function channel_val() {
             } else {
                 count++;
             }
+        } else {
+            count = 0;
         }
     }
 
