@@ -240,7 +240,7 @@ function key_to_signal(joystick) {
         ch6_target_val = min_max_scaler(joystick.ch6);
         if (ch6_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch6_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch6_target_val < rsbus_module_value[rc_map.rc4_min]) {
+        } else if (ch6_target_val < sbus_module_value[rc_map.rc4_min]) {
             ch6_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
