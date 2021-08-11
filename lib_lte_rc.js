@@ -189,6 +189,43 @@ function min_max_scaler(val) {
 //     }
 // }
 
+
+let ch1 = parseInt(ch_mid_val);
+let ch2 = parseInt(ch_mid_val);
+let ch3 = parseInt(ch_mid_val);
+let ch4 = parseInt(ch_mid_val);
+let ch5 = parseInt(ch_max_val);
+let ch6 = parseInt(ch_min_val);
+let ch7 = parseInt(ch_min_val);
+let ch8 = parseInt(ch_min_val);
+let ch9 = parseInt(ch_min_val);
+let ch10 = parseInt(ch_min_val);
+let ch11 = parseInt(ch_min_val);
+let ch12 = parseInt(ch_min_val);
+let ch13 = parseInt(ch_min_val);
+let ch14 = parseInt(ch_min_val);
+let ch15 = parseInt(ch_min_val);
+let ch16 = parseInt(ch_min_val);
+let ch17 = parseInt(330);
+
+let ch1_target_val;
+let ch2_target_val;
+let ch3_target_val;
+let ch4_target_val;
+let ch5_target_val;
+let ch6_target_val;
+let ch7_target_val;
+let ch8_target_val;
+let ch9_target_val;
+let ch10_target_val;
+let ch11_target_val;
+let ch12_target_val;
+let ch13_target_val;
+let ch14_target_val;
+let ch15_target_val;
+let ch16_target_val;
+let ch17_target_val;
+
 function key_to_signal(joystick) {
     try {
         if (joystick.hasOwnProperty('ch1')) {  // Roll
@@ -346,42 +383,6 @@ setInterval(channel_val, TIMEOUT);
 
 
 global.rxbuf = '';
-
-global.ch1 = parseInt(ch_mid_val);
-global.ch2 = parseInt(ch_mid_val);
-global.ch3 = parseInt(ch_mid_val);
-global.ch4 = parseInt(ch_mid_val);
-global.ch5 = parseInt(ch_max_val);
-global.ch6 = parseInt(ch_min_val);
-global.ch7 = parseInt(ch_min_val);
-global.ch8 = parseInt(ch_min_val);
-global.ch9 = parseInt(ch_min_val);
-global.ch10 = parseInt(ch_min_val);
-global.ch11 = parseInt(ch_min_val);
-global.ch12 = parseInt(ch_min_val);
-global.ch13 = parseInt(ch_min_val);
-global.ch14 = parseInt(ch_min_val);
-global.ch15 = parseInt(ch_min_val);
-global.ch16 = parseInt(ch_min_val);
-global.ch17 = parseInt(330);
-
-global.ch1_target_val;
-global.ch2_target_val;
-global.ch3_target_val;
-global.ch4_target_val;
-global.ch5_target_val;
-global.ch6_target_val;
-global.ch7_target_val;
-global.ch8_target_val;
-global.ch9_target_val;
-global.ch10_target_val;
-global.ch11_target_val;
-global.ch12_target_val;
-global.ch13_target_val;
-global.ch14_target_val;
-global.ch15_target_val;
-global.ch16_target_val;
-global.ch17_target_val;
 
 function channel_val() {
     rxbuf = '';
