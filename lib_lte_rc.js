@@ -338,10 +338,10 @@ function key_to_signal(joystick) {
         ch16_target_val = parseInt(ch_min_val);
         ch17_target_val = parseInt(330);
     }
+    console.log(ch1_target_val, ch2_target_val, ch3_target_val, ch4_target_val, ch5_target_val, ch6_target_val, ch7_target_val, ch8_target_val, ch9_target_val, ch10_target_val, ch11_target_val, ch12_target_val, ch13_target_val, ch14_target_val, ch15_target_val, ch16_target_val, ch17_target_val);
 }
 
 setInterval(channel_val, TIMEOUT);
-
 
 global.rxbuf = '';
 
@@ -685,7 +685,7 @@ function lib_mqtt_connect(broker_ip, port) {
             // let ch_num = parseInt(obj_lib_data.num);
             // let ch_val = parseFloat(obj_lib_data.value);
             // key_to_signal(ch_num, ch_val);
-            console.log(obj_lib_data);
+            // console.log(obj_lib_data);
             key_to_signal(obj_lib_data);
         }
     });
