@@ -57,10 +57,8 @@ function key_to_signal(joystick) {
     ch3_target_val = min_max_scaler(joystick.ch3);
     if (ch3_target_val > sbus_module_value[rc_map.rc3_max]) {
         ch3_target_val = sbus_module_value[rc_map.rc3_max];
-        console.log('if - ', ch3_target_val);
     } else if (ch3_target_val < sbus_module_value[rc_map.rc3_min]) {
         ch3_target_val = sbus_module_value[rc_map.rc3_min];
-        console.log('else if - ', ch3_target_val);
     } else {
     }
 
@@ -167,8 +165,6 @@ function key_to_signal(joystick) {
         ch16_target_val = sbus_module_value[rc_map.rc4_min];
     } else {
     }
-
-    console.log(ch1_target_val, ch2_target_val, ch3_target_val, ch4_target_val, ch5_target_val, ch6_target_val, ch7_target_val, ch8_target_val, ch9_target_val, ch10_target_val, ch11_target_val, ch12_target_val, ch13_target_val, ch14_target_val, ch15_target_val, ch16_target_val, ch17_target_val);
 }
 
 setInterval(channel_val, TIMEOUT);
