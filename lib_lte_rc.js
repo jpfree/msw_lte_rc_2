@@ -57,6 +57,10 @@ function key_to_signal(joystick) {
     }
 
     ch3_target_val = min_max_scaler(joystick.ch3);
+    console.log(joystick.ch3);
+    console.log(typeof(joystick.ch3));
+    console.log(joystick.ch3);
+    console.log(typeof(parseFloat(joystick.ch3)));
     console.log(ch3_target_val);
     if (ch3_target_val > sbus_module_value[rc_map.rc3_max]) {
         ch3_target_val = sbus_module_value[rc_map.rc3_max];
