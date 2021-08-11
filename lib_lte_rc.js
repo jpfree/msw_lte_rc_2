@@ -584,7 +584,7 @@ function sbusData() {
 }
 
 
-// sbusPortOpening();
+sbusPortOpening();
 
 function sbusPortOpening() {
     if (sbusPort == null) {
