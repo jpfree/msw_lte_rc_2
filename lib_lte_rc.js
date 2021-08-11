@@ -57,12 +57,16 @@ function key_to_signal(joystick) {
     }
 
     ch3_target_val = min_max_scaler(joystick.ch3);
+    console.log(ch3_target_val);
     if (ch3_target_val > sbus_module_value[rc_map.rc3_max]) {
         ch3_target_val = sbus_module_value[rc_map.rc3_max];
+        console.log('if - ', ch3_target_val);
     } else if (ch3_target_val < sbus_module_value[rc_map.rc3_min]) {
         ch3_target_val = sbus_module_value[rc_map.rc3_min];
+        console.log('else if - ', ch3_target_val);
     } else {
         ch3_target_val = ch_mid_val;
+        console.log('else - ', ch3_target_val);
     }
 
     ch4_target_val = min_max_scaler(joystick.ch4);
