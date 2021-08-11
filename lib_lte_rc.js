@@ -199,7 +199,8 @@ function key_to_signal(joystick) {
             ch1_target_val = sbus_module_value[rc_map.rc1_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch2')) {  // Pitch
+    }
+    if (joystick.hasOwnProperty('ch2')) {  // Pitch
         ch2_target_val = min_max_scaler(joystick.ch2);
         if (ch2_target_val > sbus_module_value[rc_map.rc2_max]) {
             ch2_target_val = sbus_module_value[rc_map.rc2_max];
@@ -207,7 +208,8 @@ function key_to_signal(joystick) {
             ch2_target_val = sbus_module_value[rc_map.rc2_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch3')) {// Throttle
+    }
+    if (joystick.hasOwnProperty('ch3')) {// Throttle
         ch3_target_val = min_max_scaler(joystick.ch3);
         if (ch3_target_val > sbus_module_value[rc_map.rc3_max]) {
             ch3_target_val = sbus_module_value[rc_map.rc3_max];
@@ -215,7 +217,8 @@ function key_to_signal(joystick) {
             ch3_target_val = sbus_module_value[rc_map.rc3_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch4')) {  // Yaw
+    }
+    if (joystick.hasOwnProperty('ch4')) {  // Yaw
         ch4_target_val = min_max_scaler(joystick.ch4);
         if (ch4_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch4_target_val = sbus_module_value[rc_map.rc4_max];
@@ -223,7 +226,8 @@ function key_to_signal(joystick) {
             ch4_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch5')) {  // Mode (Loiter, PosHold, AltHold)
+    }
+    if (joystick.hasOwnProperty('ch5')) {  // Mode (Loiter, PosHold, AltHold)
         ch5_target_val = min_max_scaler(joystick.ch5);
         if (ch5_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch5_target_val = sbus_module_value[rc_map.rc4_max];
@@ -231,7 +235,8 @@ function key_to_signal(joystick) {
             ch5_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch6')) {  // Arm/Disarm
+    }
+    if (joystick.hasOwnProperty('ch6')) {  // Arm/Disarm
         ch6_target_val = min_max_scaler(joystick.ch6);
         if (ch6_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch6_target_val = sbus_module_value[rc_map.rc4_max];
@@ -239,7 +244,8 @@ function key_to_signal(joystick) {
             ch6_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch7')) {  // RTL
+    }
+    if (joystick.hasOwnProperty('ch7')) {  // RTL
         ch7_target_val = min_max_scaler(joystick.ch7);
         if (ch7_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch7_target_val = sbus_module_value[rc_map.rc4_max];
@@ -247,7 +253,8 @@ function key_to_signal(joystick) {
             ch7_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch8')) {  // AUTO
+    }
+    if (joystick.hasOwnProperty('ch8')) {  // AUTO
         ch8_target_val = min_max_scaler(joystick.ch8);
         if (ch8_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch8_target_val = sbus_module_value[rc_map.rc4_max];
@@ -255,7 +262,8 @@ function key_to_signal(joystick) {
             ch8_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch9')) {  // LED
+    }
+    if (joystick.hasOwnProperty('ch9')) {  // LED
         ch9_target_val = min_max_scaler(joystick.ch9);
         if (ch9_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch9_target_val = sbus_module_value[rc_map.rc4_max];
@@ -263,7 +271,8 @@ function key_to_signal(joystick) {
             ch9_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch10')) {
+    }
+    if (joystick.hasOwnProperty('ch10')) {
         ch10_target_val = min_max_scaler(joystick.ch10);
         if (ch10_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch10_target_val = sbus_module_value[rc_map.rc4_max];
@@ -271,7 +280,8 @@ function key_to_signal(joystick) {
             ch10_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch11')) {  // Landing Gear
+    }
+    if (joystick.hasOwnProperty('ch11')) {  // Landing Gear
         ch11_target_val = min_max_scaler(joystick.ch11);
         if (ch11_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch11_target_val = sbus_module_value[rc_map.rc4_max];
@@ -279,7 +289,8 @@ function key_to_signal(joystick) {
             ch11_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch12')) {
+    }
+    if (joystick.hasOwnProperty('ch12')) {
         ch12_target_val = min_max_scaler(joystick.ch12);
         if (ch12_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch12_target_val = sbus_module_value[rc_map.rc4_max];
@@ -287,7 +298,8 @@ function key_to_signal(joystick) {
             ch12_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch13')) {
+    }
+    if (joystick.hasOwnProperty('ch13')) {
         ch13_target_val = min_max_scaler(joystick.ch13);
         if (ch13_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch13_target_val = sbus_module_value[rc_map.rc4_max];
@@ -295,7 +307,8 @@ function key_to_signal(joystick) {
             ch13_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch14')) {
+    }
+    if (joystick.hasOwnProperty('ch14')) {
         ch14_target_val = min_max_scaler(joystick.ch14);
         if (ch14_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch14_target_val = sbus_module_value[rc_map.rc4_max];
@@ -303,7 +316,8 @@ function key_to_signal(joystick) {
             ch14_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch15')) {
+    }
+    if (joystick.hasOwnProperty('ch15')) {
         ch15_target_val = min_max_scaler(joystick.ch15);
         if (ch15_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch15_target_val = sbus_module_value[rc_map.rc4_max];
@@ -311,7 +325,8 @@ function key_to_signal(joystick) {
             ch15_target_val = sbus_module_value[rc_map.rc4_min];
         } else {
         }
-    } else if (joystick.hasOwnProperty('ch16')) {
+    }
+    if (joystick.hasOwnProperty('ch16')) {
         ch16_target_val = min_max_scaler(joystick.ch16);
         if (ch16_target_val > sbus_module_value[rc_map.rc4_max]) {
             ch16_target_val = sbus_module_value[rc_map.rc4_max];
