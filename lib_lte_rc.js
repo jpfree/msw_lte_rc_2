@@ -190,7 +190,7 @@ function min_max_scaler(val) {
 // }
 
 function key_to_signal(joystick) {
-
+    // console.log(joystick.ch1);
     if (joystick.hasOwnProperty('ch1')) {  // Roll
         ch1_target_val = min_max_scaler(joystick.ch1);
         if (ch1_target_val > sbus_module_value[rc_map.rc1_max]) {
@@ -538,7 +538,7 @@ function channel_val() {
     rxbuf += ch17_low_byte;
     checksum_extra();
 
-    sbusPort.write(Buffer.from(rxbuf, 'hex'));
+    // sbusPort.write(Buffer.from(rxbuf, 'hex'));
     sbusData();
 }
 
@@ -584,7 +584,7 @@ function sbusData() {
 }
 
 
-sbusPortOpening();
+// sbusPortOpening();
 
 function sbusPortOpening() {
     if (sbusPort == null) {
@@ -648,6 +648,7 @@ try {
 }
 
 let lib_mqtt_client = null;
+let obj_lib_data = {};
 
 lib_mqtt_connect('localhost', 1883);
 
@@ -680,10 +681,11 @@ function lib_mqtt_connect(broker_ip, port) {
 
     lib_mqtt_client.on('message', function (topic, message) {
         if (topic === control_topic) {
-            let obj_lib_data = JSON.parse(message);
+            obj_lib_data = JSON.parse(message);
             // let ch_num = parseInt(obj_lib_data.num);
             // let ch_val = parseFloat(obj_lib_data.value);
             // key_to_signal(ch_num, ch_val);
+            console.log(obj_lib_data);
             key_to_signal(obj_lib_data);
         }
     });
