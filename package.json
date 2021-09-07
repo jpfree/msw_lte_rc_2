@@ -2,7 +2,7 @@
   "name": "msw_lte_rc",
   "version": "1.0.0",
   "description": "",
-  "main": "msw_lte_rc.js",
+  "main": "msw_lte_rc_2.js",
   "dependencies": {
     "keypress": "^0.2.1",
     "mqtt": "^4.2.8",
