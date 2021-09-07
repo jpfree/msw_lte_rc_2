@@ -16,8 +16,8 @@ let sbusPortNum = libPort;
 let sbusBaudrate = libBaudrate;
 
 global.ch_min_val = 0; // 00 DF
-global.ch_mid_val = 1024; // 03 FF
-global.ch_max_val = 2047; // 07 1F
+global.ch_mid_val = 125; // 03 FF
+global.ch_max_val = 255; // 07 1F
 
 global.ch_gap = 20;
 // data_range_each_CH = 0~2047
@@ -39,6 +39,7 @@ function min_max_scaler(val) {
 function key_to_signal(joystick) {
     // console.log(joystick);
     ch1_target_val = min_max_scaler(joystick.ch1);
+    console.log(ch1_target_val);
     if (ch1_target_val > sbus_module_value[rc_map.rc1_max]) {
         ch1_target_val = sbus_module_value[rc_map.rc1_max];
     } else if (ch1_target_val < sbus_module_value[rc_map.rc1_min]) {
@@ -47,6 +48,7 @@ function key_to_signal(joystick) {
     }
 
     ch2_target_val = min_max_scaler(joystick.ch2);
+    console.log(ch2_target_val);
     if (ch2_target_val > sbus_module_value[rc_map.rc2_max]) {
         ch2_target_val = sbus_module_value[rc_map.rc2_max];
     } else if (ch2_target_val < sbus_module_value[rc_map.rc2_min]) {
@@ -55,6 +57,7 @@ function key_to_signal(joystick) {
     }
 
     ch3_target_val = min_max_scaler(joystick.ch3);
+    console.log(ch3_target_val);
     if (ch3_target_val > sbus_module_value[rc_map.rc3_max]) {
         ch3_target_val = sbus_module_value[rc_map.rc3_max];
     } else if (ch3_target_val < sbus_module_value[rc_map.rc3_min]) {
@@ -63,6 +66,7 @@ function key_to_signal(joystick) {
     }
 
     ch4_target_val = min_max_scaler(joystick.ch4);
+    console.log(ch4_target_val);
     if (ch4_target_val > sbus_module_value[rc_map.rc4_max]) {
         ch4_target_val = sbus_module_value[rc_map.rc4_max];
     } else if (ch4_target_val < sbus_module_value[rc_map.rc4_min]) {
@@ -364,7 +368,7 @@ function channel_val() {
     rxbuf += ch17_low_byte;
     checksum_extra();
 
-    sbusPort.write(Buffer.from(rxbuf, 'hex'));
+    // sbusPort.write(Buffer.from(rxbuf, 'hex'));
     sbusData();
 }
 
@@ -410,7 +414,7 @@ function sbusData() {
 }
 
 
-sbusPortOpening();
+// sbusPortOpening();
 
 function sbusPortOpening() {
     if (sbusPort == null) {
