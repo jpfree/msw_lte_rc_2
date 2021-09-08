@@ -177,7 +177,6 @@ function init() {
                         } else {
                             // console.log('one more send req message');
                             command_delay++;
-                            console.log(util.format('RC%s_MAX', param_idx));
                             setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MAX', param_idx));
                             setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MIN', param_idx));
                             setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_TRIM', param_idx));

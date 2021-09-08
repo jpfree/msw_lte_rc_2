@@ -30,7 +30,7 @@ let TIMEOUT = 40;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
-let sbus_module_value = JSON.parse(fs.readFileSync('./' + msw_dir_name + '/sbus_module_value(pwm).json', 'utf8'));
+// let sbus_module_value = JSON.parse(fs.readFileSync('./' + msw_dir_name + '/sbus_module_value(pwm).json', 'utf8'));
 
 function min_max_scaler(val) {
     let nor_val = (val - (-1)) / (1 - (-1));
@@ -49,7 +49,6 @@ function key_to_signal(joystick) {
     // console.log(joystick);
     if ((my_control_type.toLowerCase()) === 'rc') {
         ch1_target_val = SBUS2RC(min_max_scaler(joystick.ch1));
-        console.log('ch1_target_val -', ch1_target_val);
         if (ch1_target_val > rc_map.rc1_max) {
             ch1_target_val = rc_map.rc1_max;
         } else if (ch1_target_val < rc_map.rc1_min) {
@@ -411,13 +410,14 @@ function channel_val() {
 
     // Switch 1
     ch5 = ch5_target_val;
-    ch5 = RC2SBUS(ch5);
+    ch5 = RC2SBUS(ch5) + 1;
     let hex_ch5 = ch5.toString(16);
     rxbuf += hex_ch5;
 
     // Switch 2
     ch6 = ch6_target_val;
-    ch6 = RC2SBUS(ch6);
+    // ch6 = RC2SBUS(ch6);
+    ch6 = 225;
     let hex_ch6 = ch6.toString(16);
     rxbuf += hex_ch6;
 
@@ -533,7 +533,7 @@ function channel_val() {
     rxbuf += hex_ch26;
 
     ch27 = ch27_target_val;
-    ch27 = RC2SBUS(ch27);
+    ch27 = RC2SBUS(ch27) + 2;
     let hex_ch27 = ch27.toString(16);
     rxbuf += hex_ch27;
 
@@ -603,7 +603,7 @@ function Calc_CRC_8(DataArray, Length) {
     for (i = 1; i < Length; i++) {
         crc = crc8_Table[crc ^ DataArray[i]];
     }
-
+    console.log("crc - ", crc.toString(16));
     return crc;
 }
 
