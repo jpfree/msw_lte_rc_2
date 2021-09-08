@@ -6,7 +6,6 @@
 
 let mqtt = require('mqtt');
 let fs = require('fs');
-let sf = require('sf');
 let my_msw_name = 'msw_lte_rc';
 let util = require('util');
 
