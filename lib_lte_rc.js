@@ -410,14 +410,14 @@ function channel_val() {
 
     // Switch 1
     ch5 = ch5_target_val;
-    ch5 = RC2SBUS(ch5) + 1;
+    ch5 = RC2SBUS(ch5);
     let hex_ch5 = ch5.toString(16);
     rxbuf += hex_ch5;
 
     // Switch 2
     ch6 = ch6_target_val;
-    // ch6 = RC2SBUS(ch6);
-    ch6 = 225;
+    ch6 = RC2SBUS(ch6);
+    // ch6 = 225;
     let hex_ch6 = ch6.toString(16);
     rxbuf += hex_ch6;
 
@@ -533,7 +533,7 @@ function channel_val() {
     rxbuf += hex_ch26;
 
     ch27 = ch27_target_val;
-    ch27 = RC2SBUS(ch27) + 2;
+    ch27 = RC2SBUS(ch27);
     let hex_ch27 = ch27.toString(16);
     rxbuf += hex_ch27;
 
@@ -567,7 +567,7 @@ function channel_val() {
     rxbuf += hex_crc;
     // console.log(rxbuf);
 
-    // sbusPort.write(Buffer.from(rxbuf, 'hex'));
+    sbusPort.write(Buffer.from(rxbuf, 'hex'));
     sbusData();
 }
 
@@ -645,7 +645,7 @@ function sbusData() {
     lib_mqtt_client.publish(data_topic, JSON.stringify(sbus));
 }
 
-// sbusPortOpening();
+sbusPortOpening();
 
 function sbusPortOpening() {
     if (sbusPort == null) {
