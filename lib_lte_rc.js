@@ -595,11 +595,7 @@ function Calc_CRC_8(DataArray, Length) {
     let crc;
 
     crc = 0x01;
-    console.log(DataArray)
     DataArray = Buffer.from(DataArray, 'hex');
-    console.log(crc);
-    console.log(DataArray);
-    console.log(crc ^ DataArray[5]);
     for (i = 1; i < Length; i++) {
         crc = crc8_Table[crc ^ DataArray[i]];
     }
