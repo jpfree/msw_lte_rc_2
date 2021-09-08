@@ -127,7 +127,6 @@ function set_rc_reversed_param(target_name, pub_topic, target_sys_id, param_id) 
         } else {
             MSW_mobius_mqtt_client.publish(pub_topic, msg);
         }
-        console.log(msg);
     } catch (ex) {
         console.log('[ERROR] ' + ex);
     }

@@ -6,9 +6,9 @@ let mqtt = require('mqtt');
 let fs = require('fs');
 let SerialPort = require('serialport');
 
-// let my_lib_name = 'lib_lte_rc';
+let my_lib_name = 'lib_lte_rc';
 
-// let msw_dir_name = (my_lib_name.replace('lib', 'msw') + '_' + my_lib_name.replace('lib', 'msw'));
+let msw_dir_name = (my_lib_name.replace('lib', 'msw') + '_' + my_lib_name.replace('lib', 'msw'));
 
 let sbusPort = null;
 
@@ -30,7 +30,7 @@ let TIMEOUT = 40;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
-// let sbus_module_value = JSON.parse(fs.readFileSync('./' + msw_dir_name + '/sbus_module_value(pwm).json', 'utf8'));
+let sbus_module_value = JSON.parse(fs.readFileSync('./' + msw_dir_name + '/sbus_module_value(pwm).json', 'utf8'));
 
 function min_max_scaler(val) {
     let nor_val = (val - (-1)) / (1 - (-1));
@@ -49,134 +49,261 @@ function key_to_signal(joystick) {
     // console.log(joystick);
     if ((my_control_type.toLowerCase()) === 'rc') {
         ch1_target_val = SBUS2RC(min_max_scaler(joystick.ch1));
-        if (ch1_target_val > sbus_module_value[rc_map.rc1_max]) {
-            ch1_target_val = sbus_module_value[rc_map.rc1_max];
-        } else if (ch1_target_val < sbus_module_value[rc_map.rc1_min]) {
-            ch1_target_val = sbus_module_value[rc_map.rc1_min];
+        console.log('ch1_target_val -', ch1_target_val);
+        if (ch1_target_val > rc_map.rc1_max) {
+            ch1_target_val = rc_map.rc1_max;
+        } else if (ch1_target_val < rc_map.rc1_min) {
+            ch1_target_val = rc_map.rc1_min;
         } else {
         }
 
         ch2_target_val = SBUS2RC(min_max_scaler(joystick.ch2));
-        if (ch2_target_val > sbus_module_value[rc_map.rc2_max]) {
-            ch2_target_val = sbus_module_value[rc_map.rc2_max];
-        } else if (ch2_target_val < sbus_module_value[rc_map.rc2_min]) {
-            ch2_target_val = sbus_module_value[rc_map.rc2_min];
+        if (ch2_target_val > rc_map.rc2_max) {
+            ch2_target_val = rc_map.rc2_max;
+        } else if (ch2_target_val < rc_map.rc2_min) {
+            ch2_target_val = rc_map.rc2_min;
         } else {
         }
 
         ch3_target_val = SBUS2RC(min_max_scaler(joystick.ch3));
-        if (ch3_target_val > sbus_module_value[rc_map.rc3_max]) {
-            ch3_target_val = sbus_module_value[rc_map.rc3_max];
-        } else if (ch3_target_val < sbus_module_value[rc_map.rc3_min]) {
-            ch3_target_val = sbus_module_value[rc_map.rc3_min];
+        if (ch3_target_val > rc_map.rc3_max) {
+            ch3_target_val = rc_map.rc3_max;
+        } else if (ch3_target_val < rc_map.rc3_min) {
+            ch3_target_val = rc_map.rc3_min;
         } else {
         }
 
         ch4_target_val = SBUS2RC(min_max_scaler(joystick.ch4));
-        if (ch4_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch4_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch4_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch4_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch4_target_val > rc_map.rc4_max) {
+            ch4_target_val = rc_map.rc4_max;
+        } else if (ch4_target_val < rc_map.rc4_min) {
+            ch4_target_val = rc_map.rc4_min;
         } else {
         }
 
         ch5_target_val = SBUS2RC(min_max_scaler(joystick.ch5));
-        if (ch5_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch5_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch5_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch5_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch5_target_val > rc_map.rc5_max) {
+            ch5_target_val = rc_map.rc5_max;
+        } else if (ch5_target_val < rc_map.rc5_min) {
+            ch5_target_val = rc_map.rc5_min;
         } else {
         }
 
         ch6_target_val = SBUS2RC(min_max_scaler(joystick.ch6));
-        if (ch6_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch6_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch6_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch6_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch6_target_val > rc_map.rc6_max) {
+            ch6_target_val = rc_map.rc6_max;
+        } else if (ch6_target_val < rc_map.rc6_min) {
+            ch6_target_val = rc_map.rc6_min;
         } else {
         }
 
         ch7_target_val = SBUS2RC(min_max_scaler(joystick.ch7));
-        if (ch7_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch7_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch7_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch7_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch7_target_val > rc_map.rc7_max) {
+            ch7_target_val = rc_map.rc7_max;
+        } else if (ch7_target_val < rc_map.rc7_min) {
+            ch7_target_val = rc_map.rc7_min;
         } else {
         }
 
         ch8_target_val = SBUS2RC(min_max_scaler(joystick.ch8));
-        if (ch8_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch8_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch8_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch8_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch8_target_val > rc_map.rc8_max) {
+            ch8_target_val = rc_map.rc8_max;
+        } else if (ch8_target_val < rc_map.rc8_min) {
+            ch8_target_val = rc_map.rc8_min;
         } else {
         }
 
         ch9_target_val = SBUS2RC(min_max_scaler(joystick.ch9));
-        if (ch9_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch9_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch9_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch9_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch9_target_val > rc_map.rc9_max) {
+            ch9_target_val = rc_map.rc9_max;
+        } else if (ch9_target_val < rc_map.rc9_min) {
+            ch9_target_val = rc_map.rc9_min;
         } else {
         }
 
         ch10_target_val = SBUS2RC(min_max_scaler(joystick.ch10));
-        if (ch10_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch10_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch10_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch10_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch10_target_val > rc_map.rc10_max) {
+            ch10_target_val = rc_map.rc10_max;
+        } else if (ch10_target_val < rc_map.rc10_min) {
+            ch10_target_val = rc_map.rc10_min;
         } else {
         }
 
         ch11_target_val = SBUS2RC(min_max_scaler(joystick.ch11));
-        if (ch11_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch11_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch11_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch11_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch11_target_val > rc_map.rc11_max) {
+            ch11_target_val = rc_map.rc11_max;
+        } else if (ch11_target_val < rc_map.rc11_min) {
+            ch11_target_val = rc_map.rc11_min;
         } else {
         }
 
         ch12_target_val = SBUS2RC(min_max_scaler(joystick.ch12));
-        if (ch12_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch12_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch12_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch12_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch12_target_val > rc_map.rc12_max) {
+            ch12_target_val = rc_map.rc12_max;
+        } else if (ch12_target_val < rc_map.rc12_min) {
+            ch12_target_val = rc_map.rc12_min;
         } else {
         }
 
         ch13_target_val = SBUS2RC(min_max_scaler(joystick.ch13));
-        if (ch13_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch13_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch13_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch13_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch13_target_val > rc_map.rc13_max) {
+            ch13_target_val = rc_map.rc13_max;
+        } else if (ch13_target_val < rc_map.rc13_min) {
+            ch13_target_val = rc_map.rc13_min;
         } else {
         }
 
         ch14_target_val = SBUS2RC(min_max_scaler(joystick.ch14));
-        if (ch14_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch14_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch14_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch14_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch14_target_val > rc_map.rc14_max) {
+            ch14_target_val = rc_map.rc14_max;
+        } else if (ch14_target_val < rc_map.rc14_min) {
+            ch14_target_val = rc_map.rc14_min;
         } else {
         }
 
         ch15_target_val = SBUS2RC(min_max_scaler(joystick.ch15));
-        if (ch15_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch15_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch15_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch15_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch15_target_val > rc_map.rc15_max) {
+            ch15_target_val = rc_map.rc15_max;
+        } else if (ch15_target_val < rc_map.rc15_min) {
+            ch15_target_val = rc_map.rc15_min;
         } else {
         }
 
         ch16_target_val = SBUS2RC(min_max_scaler(joystick.ch16));
-        if (ch16_target_val > sbus_module_value[rc_map.rc4_max]) {
-            ch16_target_val = sbus_module_value[rc_map.rc4_max];
-        } else if (ch16_target_val < sbus_module_value[rc_map.rc4_min]) {
-            ch16_target_val = sbus_module_value[rc_map.rc4_min];
+        if (ch16_target_val > rc_map.rc16_max) {
+            ch16_target_val = rc_map.rc16_max;
+        } else if (ch16_target_val < rc_map.rc16_min) {
+            ch16_target_val = rc_map.rc16_min;
         } else {
         }
-        ch17_target_val = SBUS2RC(min_max_scaler(joystick.ch17));
 
+        ch17_target_val = SBUS2RC(min_max_scaler(joystick.ch17));
+        if (ch17_target_val > rc_map.rc17_max) {
+            ch17_target_val = rc_map.rc17_max;
+        } else if (ch17_target_val < rc_map.rc17_min) {
+            ch17_target_val = rc_map.rc17_min;
+        } else {
+        }
+
+        ch18_target_val = SBUS2RC(min_max_scaler(joystick.ch18));
+        if (ch18_target_val > rc_map.rc18_max) {
+            ch18_target_val = rc_map.rc18_max;
+        } else if (ch18_target_val < rc_map.rc18_min) {
+            ch18_target_val = rc_map.rc18_min;
+        } else {
+        }
+
+        ch19_target_val = SBUS2RC(min_max_scaler(joystick.ch19));
+        if (ch19_target_val > rc_map.rc19_max) {
+            ch19_target_val = rc_map.rc19_max;
+        } else if (ch19_target_val < rc_map.rc19_min) {
+            ch19_target_val = rc_map.rc19_min;
+        } else {
+        }
+
+        ch20_target_val = SBUS2RC(min_max_scaler(joystick.ch20));
+        if (ch20_target_val > rc_map.rc20_max) {
+            ch20_target_val = rc_map.rc20_max;
+        } else if (ch20_target_val < rc_map.rc20_min) {
+            ch20_target_val = rc_map.rc20_min;
+        } else {
+        }
+
+        ch21_target_val = SBUS2RC(min_max_scaler(joystick.ch21));
+        if (ch21_target_val > rc_map.rc21_max) {
+            ch21_target_val = rc_map.rc21_max;
+        } else if (ch21_target_val < rc_map.rc21_min) {
+            ch21_target_val = rc_map.rc21_min;
+        } else {
+        }
+
+        ch22_target_val = SBUS2RC(min_max_scaler(joystick.ch22));
+        if (ch22_target_val > rc_map.rc22_max) {
+            ch22_target_val = rc_map.rc22_max;
+        } else if (ch22_target_val < rc_map.rc22_min) {
+            ch22_target_val = rc_map.rc22_min;
+        } else {
+        }
+
+        ch23_target_val = SBUS2RC(min_max_scaler(joystick.ch23));
+        if (ch23_target_val > rc_map.rc23_max) {
+            ch23_target_val = rc_map.rc23_max;
+        } else if (ch23_target_val < rc_map.rc23_min) {
+            ch23_target_val = rc_map.rc23_min;
+        } else {
+        }
+
+        ch24_target_val = SBUS2RC(min_max_scaler(joystick.ch24));
+        if (ch24_target_val > rc_map.rc24_max) {
+            ch24_target_val = rc_map.rc24_max;
+        } else if (ch24_target_val < rc_map.rc24_min) {
+            ch24_target_val = rc_map.rc24_min;
+        } else {
+        }
+
+        ch25_target_val = SBUS2RC(min_max_scaler(joystick.ch25));
+        if (ch25_target_val > rc_map.rc25_max) {
+            ch25_target_val = rc_map.rc25_max;
+        } else if (ch25_target_val < rc_map.rc25_min) {
+            ch25_target_val = rc_map.rc25_min;
+        } else {
+        }
+
+        ch26_target_val = SBUS2RC(min_max_scaler(joystick.ch26));
+        if (ch26_target_val > rc_map.rc26_max) {
+            ch26_target_val = rc_map.rc26_max;
+        } else if (ch26_target_val < rc_map.rc26_min) {
+            ch26_target_val = rc_map.rc26_min;
+        } else {
+        }
+
+        ch27_target_val = SBUS2RC(min_max_scaler(joystick.ch27));
+        if (ch27_target_val > rc_map.rc27_max) {
+            ch27_target_val = rc_map.rc27_max;
+        } else if (ch27_target_val < rc_map.rc27_min) {
+            ch27_target_val = rc_map.rc27_min;
+        } else {
+        }
+
+        ch28_target_val = SBUS2RC(min_max_scaler(joystick.ch28));
+        if (ch28_target_val > rc_map.rc28_max) {
+            ch28_target_val = rc_map.rc28_max;
+        } else if (ch28_target_val < rc_map.rc28_min) {
+            ch28_target_val = rc_map.rc28_min;
+        } else {
+        }
+
+        ch29_target_val = SBUS2RC(min_max_scaler(joystick.ch29));
+        if (ch29_target_val > rc_map.rc29_max) {
+            ch29_target_val = rc_map.rc29_max;
+        } else if (ch29_target_val < rc_map.rc29_min) {
+            ch29_target_val = rc_map.rc29_min;
+        } else {
+        }
+
+        ch30_target_val = SBUS2RC(min_max_scaler(joystick.ch30));
+        if (ch30_target_val > rc_map.rc30_max) {
+            ch30_target_val = rc_map.rc30_max;
+        } else if (ch30_target_val < rc_map.rc30_min) {
+            ch30_target_val = rc_map.rc30_min;
+        } else {
+        }
+
+        ch31_target_val = SBUS2RC(min_max_scaler(joystick.ch31));
+        if (ch31_target_val > rc_map.rc31_max) {
+            ch31_target_val = rc_map.rc31_max;
+        } else if (ch31_target_val < rc_map.rc31_min) {
+            ch31_target_val = rc_map.rc31_min;
+        } else {
+        }
+
+        ch32_target_val = SBUS2RC(min_max_scaler(joystick.ch32));
+        if (ch32_target_val > rc_map.rc32_max) {
+            ch32_target_val = rc_map.rc32_max;
+        } else if (ch32_target_val < rc_map.rc32_min) {
+            ch32_target_val = rc_map.rc32_min;
+        } else {
+        }
 
         // console.log(RC2SBUS(SBUS2RC(min_max_scaler(joystick.ch23))));
     } else if ((my_control_type.toLowerCase()) === 'gimbal') {
@@ -440,7 +567,7 @@ function channel_val() {
     rxbuf += hex_crc;
     // console.log(rxbuf);
 
-    sbusPort.write(Buffer.from(rxbuf, 'hex'));
+    // sbusPort.write(Buffer.from(rxbuf, 'hex'));
     sbusData();
 }
 
@@ -468,7 +595,11 @@ function Calc_CRC_8(DataArray, Length) {
     let crc;
 
     crc = 0x01;
-    DataArray = Buffer.from(DataArray);
+    console.log(DataArray)
+    DataArray = Buffer.from(DataArray, 'hex');
+    console.log(crc);
+    console.log(DataArray);
+    console.log(crc ^ DataArray[5]);
     for (i = 1; i < Length; i++) {
         crc = crc8_Table[crc ^ DataArray[i]];
     }
@@ -514,8 +645,7 @@ function sbusData() {
     lib_mqtt_client.publish(data_topic, JSON.stringify(sbus));
 }
 
-
-sbusPortOpening();
+// sbusPortOpening();
 
 function sbusPortOpening() {
     if (sbusPort == null) {
@@ -625,7 +755,3 @@ function lib_mqtt_connect(broker_ip, port) {
         console.log(err.message);
     });
 }
-
-setTimeout(function () {
-    console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
-}, 10000);
