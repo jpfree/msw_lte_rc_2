@@ -29,7 +29,6 @@ global.check_ch_val = 0.0;
 let TIMEOUT = 40;
 
 console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
-console.log(rc_map.rc1_max);
 
 // let sbus_module_value = JSON.parse(fs.readFileSync('./' + msw_dir_name + '/sbus_module_value(pwm).json', 'utf8'));
 
@@ -627,4 +626,6 @@ function lib_mqtt_connect(broker_ip, port) {
     });
 }
 
-// pkg lib_remote_gimbal.js --target node14-linux-armv6
+setTimeout(function () {
+    console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
+}, 10000);

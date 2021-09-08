@@ -8,6 +8,7 @@ let mqtt = require('mqtt');
 let fs = require('fs');
 let sf = require('sf');
 let my_msw_name = 'msw_lte_rc';
+let util = require('util');
 
 let fc = {};
 let config = {};
@@ -159,11 +160,11 @@ function init() {
         for (let idx in config.lib) {
             if (config.lib.hasOwnProperty(idx)) {
                 // Request RC PARAMs
-                for (let param_idx = 0; param_idx < 16; param_idx++) {
+                for (let param_idx = 1; param_idx < 17; param_idx++) {
                     command_delay++;
-                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, sf('RC{0}_MAX', param_idx));
-                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, sf('RC{0}_MIN', param_idx));
-                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, sf('RC{0}_TRIM', param_idx));
+                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MAX', param_idx));
+                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MIN', param_idx));
+                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_TRIM', param_idx));
                 }
 
                 //     if (joystick_params.hasOwnProperty(param_idx)) {
@@ -172,13 +173,16 @@ function init() {
                 //     }
                 // }
                 setTimeout(function () {
-                    for (let param_idx in joystick_params) {
-                        if (rc_map.hasOwnProperty(joystick_params[param_idx].toLowerCase())) {
+                    for (let param_idx = 1; param_idx < 17; param_idx++) {
+                        if ((rc_map.hasOwnProperty(util.format('RC%s_MAX', param_idx).toLowerCase())) && rc_map.hasOwnProperty(util.format('RC%s_MIN', param_idx).toLowerCase()) && rc_map.hasOwnProperty(util.format('RC%s_TRIM', param_idx).toLowerCase())) {
                             // console.log(util.format('rc_map.[%s] = %d', joystick_params[param_idx].toLowerCase(), rc_map[joystick_params[param_idx].toLowerCase()]));
                         } else {
                             // console.log('one more send req message');
                             command_delay++;
-                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, joystick_params[param_idx]);
+                            console.log(util.format('RC%s_MAX', param_idx));
+                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MAX', param_idx));
+                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MIN', param_idx));
+                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_TRIM', param_idx));
                         }
                     }
 
@@ -202,7 +206,7 @@ function init() {
                         send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC4_REVERSED');
                     } else {
                     }
-                }, 1000);
+                }, 3000);
 
                 if (msw_mqtt_client != null) {
                     for (let i = 0; i < config.lib[idx].control.length; i++) {
