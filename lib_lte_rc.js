@@ -565,7 +565,7 @@ function channel_val() {
     crc = Calc_CRC_8(rxbuf, 33);
     let hex_crc = crc.toString(16);
     rxbuf += hex_crc;
-    // console.log(rxbuf);
+    console.log(rxbuf);
 
     sbusPort.write(Buffer.from(rxbuf, 'hex'));
     sbusData();
@@ -599,10 +599,8 @@ function Calc_CRC_8(DataArray, Length) {
     for (i = 1; i < Length; i++) {
         crc = crc8_Table[crc ^ DataArray[i]];
     }
-    console.log("crc - ", crc.toString(16));
     return crc;
 }
-
 
 function sbusData() {
     let sbus = {};
