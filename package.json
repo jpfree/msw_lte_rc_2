@@ -6,7 +6,8 @@
   "dependencies": {
     "keypress": "^0.2.1",
     "mqtt": "^4.2.8",
-    "serialport": "^9.2.0"
+    "serialport": "^9.2.0",
+    "sf": "^0.2.0"
   },
   "devDependencies": {},
   "scripts": {

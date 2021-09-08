@@ -6,7 +6,7 @@
 
 let mqtt = require('mqtt');
 let fs = require('fs');
-
+let sf = require('sf');
 let my_msw_name = 'msw_lte_rc';
 
 let fc = {};
@@ -159,12 +159,18 @@ function init() {
         for (let idx in config.lib) {
             if (config.lib.hasOwnProperty(idx)) {
                 // Request RC PARAMs
-                for (let param_idx in joystick_params) {
-                    if (joystick_params.hasOwnProperty(param_idx)) {
-                        command_delay++;
-                        setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, joystick_params[param_idx]);
-                    }
+                for (let param_idx = 0; param_idx < 16; param_idx++) {
+                    command_delay++;
+                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, sf('RC{0}_MAX', param_idx));
+                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, sf('RC{0}_MIN', param_idx));
+                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, sf('RC{0}_TRIM', param_idx));
                 }
+
+                //     if (joystick_params.hasOwnProperty(param_idx)) {
+                //         command_delay++;
+                //         setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, joystick_params[param_idx]);
+                //     }
+                // }
                 setTimeout(function () {
                     for (let param_idx in joystick_params) {
                         if (rc_map.hasOwnProperty(joystick_params[param_idx].toLowerCase())) {
@@ -397,7 +403,7 @@ function parseFcData(topic, str_message) {
 
 let MSW_mobius_mqtt_client = null;
 
-MSW_mobius_mqtt_connect(drone_info.host, 1883);
+// MSW_mobius_mqtt_connect(drone_info.host, 1883);
 
 function MSW_mobius_mqtt_connect(broker_ip, port) {
     if (MSW_mobius_mqtt_client == null) {
