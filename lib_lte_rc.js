@@ -80,10 +80,10 @@ function key_to_signal(joystick) {
     }
 
     ch5_target_val = SBUS2RC(min_max_scaler(joystick.ch5));
-    if (ch5_target_val > rc_map.rc6_max) {
-        ch5_target_val = rc_map.rc6_max;
-    } else if (ch5_target_val < rc_map.rc6_min) {
-        ch5_target_val = rc_map.rc6_min;
+    if (ch5_target_val > rc_map.rc5_max) {
+        ch5_target_val = rc_map.rc5_max;
+    } else if (ch5_target_val < rc_map.rc5_min) {
+        ch5_target_val = rc_map.rc5_min;
     } else {
     }
 
