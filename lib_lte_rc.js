@@ -735,8 +735,8 @@ function lib_mqtt_connect(broker_ip, port) {
             // let ch_num = parseInt(obj_lib_data.num);
             // let ch_val = parseFloat(obj_lib_data.value);
             // key_to_signal(ch_num, ch_val);
-            console.log(obj_lib_data);
-            channel_val(obj_lib_data);
+            // console.log(message);
+            channel_val(message);
             // key_to_signal(obj_lib_data);
         }
     });

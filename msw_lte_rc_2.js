@@ -453,7 +453,7 @@ function MSW_mobius_mqtt_connect(broker_ip, port) {
                     }
                 }
             } else if (topic === remote_topic) {
-                on_receive_from_muv(topic, message.toString());
+                on_receive_from_muv(topic, message);
             }
         });
 
