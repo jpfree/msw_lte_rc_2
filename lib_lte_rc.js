@@ -5,6 +5,7 @@
 let mqtt = require('mqtt');
 let fs = require('fs');
 let SerialPort = require('serialport');
+const Buffer = require("buffer");
 
 let my_lib_name = 'lib_lte_rc';
 
@@ -28,7 +29,7 @@ global.check_ch_val = 0.0;
 
 let TIMEOUT = 40;
 
-console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
+// console.log('[ ' + drone_info.drone + ' ] RC_MAP_VALUE = \n', rc_map);
 
 // let sbus_module_value = JSON.parse(fs.readFileSync('./' + msw_dir_name + '/sbus_module_value(pwm).json', 'utf8'));
 
@@ -45,266 +46,266 @@ function RC2SBUS(x) {
     return Math.round(((x - 1500) * SBUS_RATE + 1000) / 8);
 }
 
-function key_to_signal(joystick) {
-    // console.log(joystick);
-    ch1_target_val = SBUS2RC(min_max_scaler(joystick.ch1));
-    if (ch1_target_val > rc_map.rc1_max) {
-        ch1_target_val = rc_map.rc1_max;
-    } else if (ch1_target_val < rc_map.rc1_min) {
-        ch1_target_val = rc_map.rc1_min;
-    } else {
-    }
+// function key_to_signal(joystick) {
+//     // console.log(joystick);
+//     ch1_target_val = SBUS2RC(min_max_scaler(joystick.ch1));
+//     if (ch1_target_val > rc_map.rc1_max) {
+//         ch1_target_val = rc_map.rc1_max;
+//     } else if (ch1_target_val < rc_map.rc1_min) {
+//         ch1_target_val = rc_map.rc1_min;
+//     } else {
+//     }
+//
+//     ch2_target_val = SBUS2RC(min_max_scaler(joystick.ch2));
+//     if (ch2_target_val > rc_map.rc2_max) {
+//         ch2_target_val = rc_map.rc2_max;
+//     } else if (ch2_target_val < rc_map.rc2_min) {
+//         ch2_target_val = rc_map.rc2_min;
+//     } else {
+//     }
+//
+//     ch3_target_val = SBUS2RC(min_max_scaler(joystick.ch3));
+//     if (ch3_target_val > rc_map.rc3_max) {
+//         ch3_target_val = rc_map.rc3_max;
+//     } else if (ch3_target_val < rc_map.rc3_min) {
+//         ch3_target_val = rc_map.rc3_min;
+//     } else {
+//     }
+//
+//     ch4_target_val = SBUS2RC(min_max_scaler(joystick.ch4));
+//     if (ch4_target_val > rc_map.rc4_max) {
+//         ch4_target_val = rc_map.rc4_max;
+//     } else if (ch4_target_val < rc_map.rc4_min) {
+//         ch4_target_val = rc_map.rc4_min;
+//     } else {
+//     }
+//
+//     ch5_target_val = SBUS2RC(min_max_scaler(joystick.ch5));
+//     if (ch5_target_val > rc_map.rc5_max) {
+//         ch5_target_val = rc_map.rc5_max;
+//     } else if (ch5_target_val < rc_map.rc5_min) {
+//         ch5_target_val = rc_map.rc5_min;
+//     } else {
+//     }
+//
+//     ch6_target_val = SBUS2RC(min_max_scaler(joystick.ch6));
+//     if (ch6_target_val > rc_map.rc6_max) {
+//         ch6_target_val = rc_map.rc6_max;
+//     } else if (ch6_target_val < rc_map.rc6_min) {
+//         ch6_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch7_target_val = SBUS2RC(min_max_scaler(joystick.ch7));
+//     if (ch7_target_val > rc_map.rc6_max) {
+//         ch7_target_val = rc_map.rc6_max;
+//     } else if (ch7_target_val < rc_map.rc6_min) {
+//         ch7_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch8_target_val = SBUS2RC(min_max_scaler(joystick.ch8));
+//     if (ch8_target_val > rc_map.rc6_max) {
+//         ch8_target_val = rc_map.rc6_max;
+//     } else if (ch8_target_val < rc_map.rc6_min) {
+//         ch8_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch9_target_val = SBUS2RC(min_max_scaler(joystick.ch9));
+//     if (ch9_target_val > rc_map.rc6_max) {
+//         ch9_target_val = rc_map.rc6_max;
+//     } else if (ch9_target_val < rc_map.rc6_min) {
+//         ch9_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch10_target_val = SBUS2RC(min_max_scaler(joystick.ch10));
+//     if (ch10_target_val > rc_map.rc6_max) {
+//         ch10_target_val = rc_map.rc6_max;
+//     } else if (ch10_target_val < rc_map.rc6_min) {
+//         ch10_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch11_target_val = SBUS2RC(min_max_scaler(joystick.ch11));
+//     if (ch11_target_val > rc_map.rc6_max) {
+//         ch11_target_val = rc_map.rc6_max;
+//     } else if (ch11_target_val < rc_map.rc6_min) {
+//         ch11_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch12_target_val = SBUS2RC(min_max_scaler(joystick.ch12));
+//     if (ch12_target_val > rc_map.rc6_max) {
+//         ch12_target_val = rc_map.rc6_max;
+//     } else if (ch12_target_val < rc_map.rc6_min) {
+//         ch12_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch13_target_val = SBUS2RC(min_max_scaler(joystick.ch13));
+//     if (ch13_target_val > rc_map.rc6_max) {
+//         ch13_target_val = rc_map.rc6_max;
+//     } else if (ch13_target_val < rc_map.rc6_min) {
+//         ch13_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch14_target_val = SBUS2RC(min_max_scaler(joystick.ch14));
+//     if (ch14_target_val > rc_map.rc6_max) {
+//         ch14_target_val = rc_map.rc6_max;
+//     } else if (ch14_target_val < rc_map.rc6_min) {
+//         ch14_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch15_target_val = SBUS2RC(min_max_scaler(joystick.ch15));
+//     if (ch15_target_val > rc_map.rc6_max) {
+//         ch15_target_val = rc_map.rc6_max;
+//     } else if (ch15_target_val < rc_map.rc6_min) {
+//         ch15_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch16_target_val = SBUS2RC(min_max_scaler(joystick.ch16));
+//     if (ch16_target_val > rc_map.rc6_max) {
+//         ch16_target_val = rc_map.rc6_max;
+//     } else if (ch16_target_val < rc_map.rc6_min) {
+//         ch16_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch17_target_val = SBUS2RC(min_max_scaler(joystick.ch17));
+//     if (ch17_target_val > rc_map.rc6_max) {
+//         ch17_target_val = rc_map.rc6_max;
+//     } else if (ch17_target_val < rc_map.rc6_min) {
+//         ch17_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch18_target_val = SBUS2RC(min_max_scaler(joystick.ch18));
+//     if (ch18_target_val > rc_map.rc6_max) {
+//         ch18_target_val = rc_map.rc6_max;
+//     } else if (ch18_target_val < rc_map.rc6_min) {
+//         ch18_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch19_target_val = SBUS2RC(min_max_scaler(joystick.ch19));
+//     if (ch19_target_val > rc_map.rc6_max) {
+//         ch19_target_val = rc_map.rc6_max;
+//     } else if (ch19_target_val < rc_map.rc6_min) {
+//         ch19_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch20_target_val = SBUS2RC(min_max_scaler(joystick.ch20));
+//     if (ch20_target_val > rc_map.rc6_max) {
+//         ch20_target_val = rc_map.rc6_max;
+//     } else if (ch20_target_val < rc_map.rc6_min) {
+//         ch20_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch21_target_val = SBUS2RC(min_max_scaler(joystick.ch21));
+//     if (ch21_target_val > rc_map.rc6_max) {
+//         ch21_target_val = rc_map.rc6_max;
+//     } else if (ch21_target_val < rc_map.rc6_min) {
+//         ch21_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch22_target_val = SBUS2RC(min_max_scaler(joystick.ch22));
+//     if (ch22_target_val > rc_map.rc6_max) {
+//         ch22_target_val = rc_map.rc6_max;
+//     } else if (ch22_target_val < rc_map.rc6_min) {
+//         ch22_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch23_target_val = SBUS2RC(min_max_scaler(joystick.ch23));
+//     if (ch23_target_val > rc_map.rc6_max) {
+//         ch23_target_val = rc_map.rc6_max;
+//     } else if (ch23_target_val < rc_map.rc6_min) {
+//         ch23_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch24_target_val = SBUS2RC(min_max_scaler(joystick.ch24));
+//     if (ch24_target_val > rc_map.rc6_max) {
+//         ch24_target_val = rc_map.rc6_max;
+//     } else if (ch24_target_val < rc_map.rc6_min) {
+//         ch24_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch25_target_val = SBUS2RC(min_max_scaler(joystick.ch25));
+//     if (ch25_target_val > rc_map.rc6_max) {
+//         ch25_target_val = rc_map.rc6_max;
+//     } else if (ch25_target_val < rc_map.rc6_min) {
+//         ch25_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch26_target_val = SBUS2RC(min_max_scaler(joystick.ch26));
+//     if (ch26_target_val > rc_map.rc6_max) {
+//         ch26_target_val = rc_map.rc6_max;
+//     } else if (ch26_target_val < rc_map.rc6_min) {
+//         ch26_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch27_target_val = SBUS2RC(min_max_scaler(joystick.ch27));
+//     if (ch27_target_val > rc_map.rc6_max) {
+//         ch27_target_val = rc_map.rc6_max;
+//     } else if (ch27_target_val < rc_map.rc6_min) {
+//         ch27_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch28_target_val = SBUS2RC(min_max_scaler(joystick.ch28));
+//     if (ch28_target_val > rc_map.rc6_max) {
+//         ch28_target_val = rc_map.rc6_max;
+//     } else if (ch28_target_val < rc_map.rc6_min) {
+//         ch28_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch29_target_val = SBUS2RC(min_max_scaler(joystick.ch29));
+//     if (ch29_target_val > rc_map.rc6_max) {
+//         ch29_target_val = rc_map.rc6_max;
+//     } else if (ch29_target_val < rc_map.rc6_min) {
+//         ch29_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch30_target_val = SBUS2RC(min_max_scaler(joystick.ch30));
+//     if (ch30_target_val > rc_map.rc6_max) {
+//         ch30_target_val = rc_map.rc6_max;
+//     } else if (ch30_target_val < rc_map.rc6_min) {
+//         ch30_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch31_target_val = SBUS2RC(min_max_scaler(joystick.ch31));
+//     if (ch31_target_val > rc_map.rc6_max) {
+//         ch31_target_val = rc_map.rc6_max;
+//     } else if (ch31_target_val < rc_map.rc6_min) {
+//         ch31_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+//
+//     ch32_target_val = SBUS2RC(min_max_scaler(joystick.ch32));
+//     if (ch32_target_val > rc_map.rc6_max) {
+//         ch32_target_val = rc_map.rc6_max;
+//     } else if (ch32_target_val < rc_map.rc6_min) {
+//         ch32_target_val = rc_map.rc6_min;
+//     } else {
+//     }
+// }
 
-    ch2_target_val = SBUS2RC(min_max_scaler(joystick.ch2));
-    if (ch2_target_val > rc_map.rc2_max) {
-        ch2_target_val = rc_map.rc2_max;
-    } else if (ch2_target_val < rc_map.rc2_min) {
-        ch2_target_val = rc_map.rc2_min;
-    } else {
-    }
-
-    ch3_target_val = SBUS2RC(min_max_scaler(joystick.ch3));
-    if (ch3_target_val > rc_map.rc3_max) {
-        ch3_target_val = rc_map.rc3_max;
-    } else if (ch3_target_val < rc_map.rc3_min) {
-        ch3_target_val = rc_map.rc3_min;
-    } else {
-    }
-
-    ch4_target_val = SBUS2RC(min_max_scaler(joystick.ch4));
-    if (ch4_target_val > rc_map.rc4_max) {
-        ch4_target_val = rc_map.rc4_max;
-    } else if (ch4_target_val < rc_map.rc4_min) {
-        ch4_target_val = rc_map.rc4_min;
-    } else {
-    }
-
-    ch5_target_val = SBUS2RC(min_max_scaler(joystick.ch5));
-    if (ch5_target_val > rc_map.rc5_max) {
-        ch5_target_val = rc_map.rc5_max;
-    } else if (ch5_target_val < rc_map.rc5_min) {
-        ch5_target_val = rc_map.rc5_min;
-    } else {
-    }
-
-    ch6_target_val = SBUS2RC(min_max_scaler(joystick.ch6));
-    if (ch6_target_val > rc_map.rc6_max) {
-        ch6_target_val = rc_map.rc6_max;
-    } else if (ch6_target_val < rc_map.rc6_min) {
-        ch6_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch7_target_val = SBUS2RC(min_max_scaler(joystick.ch7));
-    if (ch7_target_val > rc_map.rc6_max) {
-        ch7_target_val = rc_map.rc6_max;
-    } else if (ch7_target_val < rc_map.rc6_min) {
-        ch7_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch8_target_val = SBUS2RC(min_max_scaler(joystick.ch8));
-    if (ch8_target_val > rc_map.rc6_max) {
-        ch8_target_val = rc_map.rc6_max;
-    } else if (ch8_target_val < rc_map.rc6_min) {
-        ch8_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch9_target_val = SBUS2RC(min_max_scaler(joystick.ch9));
-    if (ch9_target_val > rc_map.rc6_max) {
-        ch9_target_val = rc_map.rc6_max;
-    } else if (ch9_target_val < rc_map.rc6_min) {
-        ch9_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch10_target_val = SBUS2RC(min_max_scaler(joystick.ch10));
-    if (ch10_target_val > rc_map.rc6_max) {
-        ch10_target_val = rc_map.rc6_max;
-    } else if (ch10_target_val < rc_map.rc6_min) {
-        ch10_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch11_target_val = SBUS2RC(min_max_scaler(joystick.ch11));
-    if (ch11_target_val > rc_map.rc6_max) {
-        ch11_target_val = rc_map.rc6_max;
-    } else if (ch11_target_val < rc_map.rc6_min) {
-        ch11_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch12_target_val = SBUS2RC(min_max_scaler(joystick.ch12));
-    if (ch12_target_val > rc_map.rc6_max) {
-        ch12_target_val = rc_map.rc6_max;
-    } else if (ch12_target_val < rc_map.rc6_min) {
-        ch12_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch13_target_val = SBUS2RC(min_max_scaler(joystick.ch13));
-    if (ch13_target_val > rc_map.rc6_max) {
-        ch13_target_val = rc_map.rc6_max;
-    } else if (ch13_target_val < rc_map.rc6_min) {
-        ch13_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch14_target_val = SBUS2RC(min_max_scaler(joystick.ch14));
-    if (ch14_target_val > rc_map.rc6_max) {
-        ch14_target_val = rc_map.rc6_max;
-    } else if (ch14_target_val < rc_map.rc6_min) {
-        ch14_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch15_target_val = SBUS2RC(min_max_scaler(joystick.ch15));
-    if (ch15_target_val > rc_map.rc6_max) {
-        ch15_target_val = rc_map.rc6_max;
-    } else if (ch15_target_val < rc_map.rc6_min) {
-        ch15_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch16_target_val = SBUS2RC(min_max_scaler(joystick.ch16));
-    if (ch16_target_val > rc_map.rc6_max) {
-        ch16_target_val = rc_map.rc6_max;
-    } else if (ch16_target_val < rc_map.rc6_min) {
-        ch16_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch17_target_val = SBUS2RC(min_max_scaler(joystick.ch17));
-    if (ch17_target_val > rc_map.rc6_max) {
-        ch17_target_val = rc_map.rc6_max;
-    } else if (ch17_target_val < rc_map.rc6_min) {
-        ch17_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch18_target_val = SBUS2RC(min_max_scaler(joystick.ch18));
-    if (ch18_target_val > rc_map.rc6_max) {
-        ch18_target_val = rc_map.rc6_max;
-    } else if (ch18_target_val < rc_map.rc6_min) {
-        ch18_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch19_target_val = SBUS2RC(min_max_scaler(joystick.ch19));
-    if (ch19_target_val > rc_map.rc6_max) {
-        ch19_target_val = rc_map.rc6_max;
-    } else if (ch19_target_val < rc_map.rc6_min) {
-        ch19_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch20_target_val = SBUS2RC(min_max_scaler(joystick.ch20));
-    if (ch20_target_val > rc_map.rc6_max) {
-        ch20_target_val = rc_map.rc6_max;
-    } else if (ch20_target_val < rc_map.rc6_min) {
-        ch20_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch21_target_val = SBUS2RC(min_max_scaler(joystick.ch21));
-    if (ch21_target_val > rc_map.rc6_max) {
-        ch21_target_val = rc_map.rc6_max;
-    } else if (ch21_target_val < rc_map.rc6_min) {
-        ch21_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch22_target_val = SBUS2RC(min_max_scaler(joystick.ch22));
-    if (ch22_target_val > rc_map.rc6_max) {
-        ch22_target_val = rc_map.rc6_max;
-    } else if (ch22_target_val < rc_map.rc6_min) {
-        ch22_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch23_target_val = SBUS2RC(min_max_scaler(joystick.ch23));
-    if (ch23_target_val > rc_map.rc6_max) {
-        ch23_target_val = rc_map.rc6_max;
-    } else if (ch23_target_val < rc_map.rc6_min) {
-        ch23_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch24_target_val = SBUS2RC(min_max_scaler(joystick.ch24));
-    if (ch24_target_val > rc_map.rc6_max) {
-        ch24_target_val = rc_map.rc6_max;
-    } else if (ch24_target_val < rc_map.rc6_min) {
-        ch24_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch25_target_val = SBUS2RC(min_max_scaler(joystick.ch25));
-    if (ch25_target_val > rc_map.rc6_max) {
-        ch25_target_val = rc_map.rc6_max;
-    } else if (ch25_target_val < rc_map.rc6_min) {
-        ch25_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch26_target_val = SBUS2RC(min_max_scaler(joystick.ch26));
-    if (ch26_target_val > rc_map.rc6_max) {
-        ch26_target_val = rc_map.rc6_max;
-    } else if (ch26_target_val < rc_map.rc6_min) {
-        ch26_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch27_target_val = SBUS2RC(min_max_scaler(joystick.ch27));
-    if (ch27_target_val > rc_map.rc6_max) {
-        ch27_target_val = rc_map.rc6_max;
-    } else if (ch27_target_val < rc_map.rc6_min) {
-        ch27_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch28_target_val = SBUS2RC(min_max_scaler(joystick.ch28));
-    if (ch28_target_val > rc_map.rc6_max) {
-        ch28_target_val = rc_map.rc6_max;
-    } else if (ch28_target_val < rc_map.rc6_min) {
-        ch28_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch29_target_val = SBUS2RC(min_max_scaler(joystick.ch29));
-    if (ch29_target_val > rc_map.rc6_max) {
-        ch29_target_val = rc_map.rc6_max;
-    } else if (ch29_target_val < rc_map.rc6_min) {
-        ch29_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch30_target_val = SBUS2RC(min_max_scaler(joystick.ch30));
-    if (ch30_target_val > rc_map.rc6_max) {
-        ch30_target_val = rc_map.rc6_max;
-    } else if (ch30_target_val < rc_map.rc6_min) {
-        ch30_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch31_target_val = SBUS2RC(min_max_scaler(joystick.ch31));
-    if (ch31_target_val > rc_map.rc6_max) {
-        ch31_target_val = rc_map.rc6_max;
-    } else if (ch31_target_val < rc_map.rc6_min) {
-        ch31_target_val = rc_map.rc6_min;
-    } else {
-    }
-
-    ch32_target_val = SBUS2RC(min_max_scaler(joystick.ch32));
-    if (ch32_target_val > rc_map.rc6_max) {
-        ch32_target_val = rc_map.rc6_max;
-    } else if (ch32_target_val < rc_map.rc6_min) {
-        ch32_target_val = rc_map.rc6_min;
-    } else {
-    }
-}
-
-setInterval(channel_val, TIMEOUT);
+// setInterval(channel_val, TIMEOUT);
 
 global.rxbuf = '';
 
@@ -374,195 +375,195 @@ global.ch30_target_val = parseInt(ch_min_val);
 global.ch31_target_val = parseInt(ch_min_val);
 global.ch32_target_val = parseInt(ch_min_val);
 
-function channel_val() {
-    rxbuf = '';
-    rxbuf += 'ff';
+function channel_val(obj_lib_data) {
+    // rxbuf = '';
+    // rxbuf += 'ff';
+    //
+    // // CH1 - Roll
+    // ch1 = ch1_target_val;
+    // ch1 = RC2SBUS(ch1);
+    // let hex_ch1 = ch1.toString(16);
+    // rxbuf += hex_ch1;
+    //
+    // // CH2 - Pitch
+    // ch2 = ch2_target_val;
+    // ch2 = RC2SBUS(ch2);
+    // let hex_ch2 = ch2.toString(16);
+    // rxbuf += hex_ch2;
+    //
+    // // CH3 - Throttle
+    // ch3 = ch3_target_val;
+    // ch3 = RC2SBUS(ch3);
+    // let hex_ch3 = ch3.toString(16);
+    // rxbuf += hex_ch3;
+    //
+    // // CH4 - Yaw
+    // ch4 = ch4_target_val;
+    // ch4 = RC2SBUS(ch4);
+    // let hex_ch4 = ch4.toString(16);
+    // rxbuf += hex_ch4;
+    //
+    // // Switch 1
+    // ch5 = ch5_target_val;
+    // ch5 = RC2SBUS(ch5);
+    // let hex_ch5 = ch5.toString(16);
+    // rxbuf += hex_ch5;
+    //
+    // // Switch 2
+    // ch6 = ch6_target_val;
+    // ch6 = RC2SBUS(ch6);
+    // // ch6 = 225;
+    // let hex_ch6 = ch6.toString(16);
+    // rxbuf += hex_ch6;
+    //
+    // // Switch 3
+    // ch7 = ch7_target_val;
+    // ch7 = RC2SBUS(ch7);
+    // let hex_ch7 = ch7.toString(16);
+    // rxbuf += hex_ch7;
+    //
+    // // Switch 4
+    // ch8 = ch8_target_val;
+    // ch8 = RC2SBUS(ch8);
+    // let hex_ch8 = ch8.toString(16);
+    // rxbuf += hex_ch8;
+    //
+    // // Switch 5
+    // ch9 = ch9_target_val;
+    // ch9 = RC2SBUS(ch9);
+    // let hex_ch9 = ch9.toString(16);
+    // rxbuf += hex_ch9;
+    //
+    // // Switch 6
+    // ch10 = ch10_target_val;
+    // ch10 = RC2SBUS(ch10);
+    // let hex_ch10 = ch10.toString(16);
+    // rxbuf += hex_ch10;
+    //
+    // // Switch 7
+    // ch11 = ch11_target_val;
+    // ch11 = RC2SBUS(ch11);
+    // let hex_ch11 = ch11.toString(16);
+    // rxbuf += hex_ch11;
+    //
+    // // Switch 8
+    // ch12 = ch12_target_val;
+    // ch12 = RC2SBUS(ch12);
+    // let hex_ch12 = ch12.toString(16);
+    // rxbuf += hex_ch12;
+    //
+    // // Switch 9
+    // ch13 = ch13_target_val;
+    // ch13 = RC2SBUS(ch13);
+    // let hex_ch13 = ch13.toString(16);
+    // rxbuf += hex_ch13;
+    //
+    // // Switch 10
+    // ch14 = ch14_target_val;
+    // ch14 = RC2SBUS(ch14);
+    // let hex_ch14 = ch14.toString(16);
+    // rxbuf += hex_ch14;
+    //
+    // // Switch 11
+    // ch15 = ch15_target_val;
+    // ch15 = RC2SBUS(ch15);
+    // let hex_ch15 = ch15.toString(16);
+    // rxbuf += hex_ch15;
+    //
+    // // Switch 12
+    // ch16 = ch16_target_val;
+    // ch16 = RC2SBUS(ch16);
+    // let hex_ch16 = ch16.toString(16);
+    // rxbuf += hex_ch16;
+    //
+    // // Switch 13
+    // ch17 = ch17_target_val;
+    // ch17 = RC2SBUS(ch17);
+    // let hex_ch17 = ch17.toString(16);
+    // rxbuf += hex_ch17;
+    //
+    // ch18 = ch18_target_val;
+    // ch18 = RC2SBUS(ch18);
+    // let hex_ch18 = ch18.toString(16);
+    // rxbuf += hex_ch18;
+    //
+    // ch19 = ch19_target_val;
+    // ch19 = RC2SBUS(ch19);
+    // let hex_ch19 = ch19.toString(16);
+    // rxbuf += hex_ch19;
+    //
+    // ch20 = ch20_target_val;
+    // ch20 = RC2SBUS(ch20);
+    // let hex_ch20 = ch20.toString(16);
+    // rxbuf += hex_ch20;
+    //
+    // ch21 = ch21_target_val;
+    // ch21 = RC2SBUS(ch21);
+    // let hex_ch21 = ch21.toString(16);
+    // rxbuf += hex_ch21;
+    //
+    // ch22 = ch22_target_val;
+    // ch22 = RC2SBUS(ch22);
+    // let hex_ch22 = ch22.toString(16);
+    // rxbuf += hex_ch22;
+    //
+    // ch23 = ch23_target_val;
+    // ch23 = RC2SBUS(ch23);
+    // let hex_ch23 = ch23.toString(16);
+    // rxbuf += hex_ch23;
+    //
+    // ch24 = ch24_target_val;
+    // ch24 = RC2SBUS(ch24);
+    // let hex_ch24 = ch24.toString(16);
+    // rxbuf += hex_ch24;
+    //
+    // ch25 = ch25_target_val;
+    // ch25 = RC2SBUS(ch25);
+    // let hex_ch25 = ch25.toString(16);
+    // rxbuf += hex_ch25;
+    //
+    // ch26 = ch26_target_val;
+    // ch26 = RC2SBUS(ch26);
+    // let hex_ch26 = ch26.toString(16);
+    // rxbuf += hex_ch26;
+    //
+    // ch27 = ch27_target_val;
+    // ch27 = RC2SBUS(ch27);
+    // let hex_ch27 = ch27.toString(16);
+    // rxbuf += hex_ch27;
+    //
+    // ch28 = ch28_target_val;
+    // ch28 = RC2SBUS(ch28);
+    // let hex_ch28 = ch28.toString(16);
+    // rxbuf += hex_ch28;
+    //
+    // ch29 = ch29_target_val;
+    // ch29 = RC2SBUS(ch29);
+    // let hex_ch29 = ch29.toString(16);
+    // rxbuf += hex_ch29;
+    //
+    // ch30 = ch30_target_val;
+    // ch30 = RC2SBUS(ch30);
+    // let hex_ch30 = ch30.toString(16);
+    // rxbuf += hex_ch30;
+    //
+    // ch31 = ch31_target_val;
+    // ch31 = RC2SBUS(ch31);
+    // let hex_ch31 = ch31.toString(16);
+    // rxbuf += hex_ch31;
+    //
+    // ch32 = ch32_target_val;
+    // ch32 = RC2SBUS(ch32);
+    // let hex_ch32 = ch32.toString(16);
+    // rxbuf += hex_ch32;
+    //
+    // crc = Calc_CRC_8(rxbuf, 33);
+    // let hex_crc = crc.toString(16);
+    // rxbuf += hex_crc;
+    // // console.log(rxbuf);
 
-    // CH1 - Roll
-    ch1 = ch1_target_val;
-    ch1 = RC2SBUS(ch1);
-    let hex_ch1 = ch1.toString(16);
-    rxbuf += hex_ch1;
-
-    // CH2 - Pitch
-    ch2 = ch2_target_val;
-    ch2 = RC2SBUS(ch2);
-    let hex_ch2 = ch2.toString(16);
-    rxbuf += hex_ch2;
-
-    // CH3 - Throttle
-    ch3 = ch3_target_val;
-    ch3 = RC2SBUS(ch3);
-    let hex_ch3 = ch3.toString(16);
-    rxbuf += hex_ch3;
-
-    // CH4 - Yaw
-    ch4 = ch4_target_val;
-    ch4 = RC2SBUS(ch4);
-    let hex_ch4 = ch4.toString(16);
-    rxbuf += hex_ch4;
-
-    // Switch 1
-    ch5 = ch5_target_val;
-    ch5 = RC2SBUS(ch5);
-    let hex_ch5 = ch5.toString(16);
-    rxbuf += hex_ch5;
-
-    // Switch 2
-    ch6 = ch6_target_val;
-    ch6 = RC2SBUS(ch6);
-    // ch6 = 225;
-    let hex_ch6 = ch6.toString(16);
-    rxbuf += hex_ch6;
-
-    // Switch 3
-    ch7 = ch7_target_val;
-    ch7 = RC2SBUS(ch7);
-    let hex_ch7 = ch7.toString(16);
-    rxbuf += hex_ch7;
-
-    // Switch 4
-    ch8 = ch8_target_val;
-    ch8 = RC2SBUS(ch8);
-    let hex_ch8 = ch8.toString(16);
-    rxbuf += hex_ch8;
-
-    // Switch 5
-    ch9 = ch9_target_val;
-    ch9 = RC2SBUS(ch9);
-    let hex_ch9 = ch9.toString(16);
-    rxbuf += hex_ch9;
-
-    // Switch 6
-    ch10 = ch10_target_val;
-    ch10 = RC2SBUS(ch10);
-    let hex_ch10 = ch10.toString(16);
-    rxbuf += hex_ch10;
-
-    // Switch 7
-    ch11 = ch11_target_val;
-    ch11 = RC2SBUS(ch11);
-    let hex_ch11 = ch11.toString(16);
-    rxbuf += hex_ch11;
-
-    // Switch 8
-    ch12 = ch12_target_val;
-    ch12 = RC2SBUS(ch12);
-    let hex_ch12 = ch12.toString(16);
-    rxbuf += hex_ch12;
-
-    // Switch 9
-    ch13 = ch13_target_val;
-    ch13 = RC2SBUS(ch13);
-    let hex_ch13 = ch13.toString(16);
-    rxbuf += hex_ch13;
-
-    // Switch 10
-    ch14 = ch14_target_val;
-    ch14 = RC2SBUS(ch14);
-    let hex_ch14 = ch14.toString(16);
-    rxbuf += hex_ch14;
-
-    // Switch 11
-    ch15 = ch15_target_val;
-    ch15 = RC2SBUS(ch15);
-    let hex_ch15 = ch15.toString(16);
-    rxbuf += hex_ch15;
-
-    // Switch 12
-    ch16 = ch16_target_val;
-    ch16 = RC2SBUS(ch16);
-    let hex_ch16 = ch16.toString(16);
-    rxbuf += hex_ch16;
-
-    // Switch 13
-    ch17 = ch17_target_val;
-    ch17 = RC2SBUS(ch17);
-    let hex_ch17 = ch17.toString(16);
-    rxbuf += hex_ch17;
-
-    ch18 = ch18_target_val;
-    ch18 = RC2SBUS(ch18);
-    let hex_ch18 = ch18.toString(16);
-    rxbuf += hex_ch18;
-
-    ch19 = ch19_target_val;
-    ch19 = RC2SBUS(ch19);
-    let hex_ch19 = ch19.toString(16);
-    rxbuf += hex_ch19;
-
-    ch20 = ch20_target_val;
-    ch20 = RC2SBUS(ch20);
-    let hex_ch20 = ch20.toString(16);
-    rxbuf += hex_ch20;
-
-    ch21 = ch21_target_val;
-    ch21 = RC2SBUS(ch21);
-    let hex_ch21 = ch21.toString(16);
-    rxbuf += hex_ch21;
-
-    ch22 = ch22_target_val;
-    ch22 = RC2SBUS(ch22);
-    let hex_ch22 = ch22.toString(16);
-    rxbuf += hex_ch22;
-
-    ch23 = ch23_target_val;
-    ch23 = RC2SBUS(ch23);
-    let hex_ch23 = ch23.toString(16);
-    rxbuf += hex_ch23;
-
-    ch24 = ch24_target_val;
-    ch24 = RC2SBUS(ch24);
-    let hex_ch24 = ch24.toString(16);
-    rxbuf += hex_ch24;
-
-    ch25 = ch25_target_val;
-    ch25 = RC2SBUS(ch25);
-    let hex_ch25 = ch25.toString(16);
-    rxbuf += hex_ch25;
-
-    ch26 = ch26_target_val;
-    ch26 = RC2SBUS(ch26);
-    let hex_ch26 = ch26.toString(16);
-    rxbuf += hex_ch26;
-
-    ch27 = ch27_target_val;
-    ch27 = RC2SBUS(ch27);
-    let hex_ch27 = ch27.toString(16);
-    rxbuf += hex_ch27;
-
-    ch28 = ch28_target_val;
-    ch28 = RC2SBUS(ch28);
-    let hex_ch28 = ch28.toString(16);
-    rxbuf += hex_ch28;
-
-    ch29 = ch29_target_val;
-    ch29 = RC2SBUS(ch29);
-    let hex_ch29 = ch29.toString(16);
-    rxbuf += hex_ch29;
-
-    ch30 = ch30_target_val;
-    ch30 = RC2SBUS(ch30);
-    let hex_ch30 = ch30.toString(16);
-    rxbuf += hex_ch30;
-
-    ch31 = ch31_target_val;
-    ch31 = RC2SBUS(ch31);
-    let hex_ch31 = ch31.toString(16);
-    rxbuf += hex_ch31;
-
-    ch32 = ch32_target_val;
-    ch32 = RC2SBUS(ch32);
-    let hex_ch32 = ch32.toString(16);
-    rxbuf += hex_ch32;
-
-    crc = Calc_CRC_8(rxbuf, 33);
-    let hex_crc = crc.toString(16);
-    rxbuf += hex_crc;
-    // console.log(rxbuf);
-
-    sbusPort.write(Buffer.from(rxbuf, 'hex'));
-    sbusData();
+    sbusPort.write(obj_lib_data);
+    // sbusData();
 }
 
 let crc8_Table = [
@@ -630,7 +631,7 @@ function sbusData() {
     sbus.ch30 = ch30;
     sbus.ch31 = ch31;
     sbus.ch32 = ch32;
-    lib_mqtt_client.publish(data_topic, JSON.stringify(sbus));
+    // lib_mqtt_client.publish(data_topic, JSON.stringify(sbus));
 }
 
 sbusPortOpening();
@@ -730,12 +731,13 @@ function lib_mqtt_connect(broker_ip, port) {
 
     lib_mqtt_client.on('message', function (topic, message) {
         if (topic === control_topic) {
-            obj_lib_data = JSON.parse(message);
+            obj_lib_data = message;
             // let ch_num = parseInt(obj_lib_data.num);
             // let ch_val = parseFloat(obj_lib_data.value);
             // key_to_signal(ch_num, ch_val);
-            // console.log(obj_lib_data);
-            key_to_signal(obj_lib_data);
+            console.log(obj_lib_data);
+            channel_val(obj_lib_data);
+            // key_to_signal(obj_lib_data);
         }
     });
 

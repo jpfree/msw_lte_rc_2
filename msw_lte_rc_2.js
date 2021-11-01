@@ -41,7 +41,7 @@ try {
     config.sortie_name = '';
     config.directory_name = '';
     config.gcs = 'KETI_MUV';
-    config.drone = 'KETI_Demo';
+    config.drone = 'KETI_UAV_2';
     config.lib = [];
 }
 
@@ -157,53 +157,53 @@ function init() {
     if (config.lib.length > 0) {
         for (let idx in config.lib) {
             if (config.lib.hasOwnProperty(idx)) {
-                // Request RC PARAMs
-                for (let param_idx = 1; param_idx < 17; param_idx++) {
-                    command_delay++;
-                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MAX', param_idx));
-                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MIN', param_idx));
-                    setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_TRIM', param_idx));
-                }
-
-                //     if (joystick_params.hasOwnProperty(param_idx)) {
-                //         command_delay++;
-                //         setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, joystick_params[param_idx]);
-                //     }
+                // // Request RC PARAMs
+                // for (let param_idx = 1; param_idx < 17; param_idx++) {
+                //     command_delay++;
+                //     setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MAX', param_idx));
+                //     setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MIN', param_idx));
+                //     setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_TRIM', param_idx));
                 // }
-                setTimeout(function () {
-                    for (let param_idx = 1; param_idx < 17; param_idx++) {
-                        if ((rc_map.hasOwnProperty(util.format('RC%s_MAX', param_idx).toLowerCase())) && rc_map.hasOwnProperty(util.format('RC%s_MIN', param_idx).toLowerCase()) && rc_map.hasOwnProperty(util.format('RC%s_TRIM', param_idx).toLowerCase())) {
-                            // console.log(util.format('rc_map.[%s] = %d', joystick_params[param_idx].toLowerCase(), rc_map[joystick_params[param_idx].toLowerCase()]));
-                        } else {
-                            // console.log('one more send req message');
-                            command_delay++;
-                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MAX', param_idx));
-                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MIN', param_idx));
-                            setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_TRIM', param_idx));
-                        }
-                    }
-
-                    if (rc_map.rc1_reversed !== 0) {
-                        set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC1_REVERSED');
-                        send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC1_REVERSED');
-                    } else {
-                    }
-                    if (rc_map.rc2_reversed !== 0) {
-                        set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC2_REVERSED');
-                        send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC2_REVERSED');
-                    } else {
-                    }
-                    if (rc_map.rc3_reversed !== 0) {
-                        set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC3_REVERSED');
-                        send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC3_REVERSED');
-                    } else {
-                    }
-                    if (rc_map.rc4_reversed !== 0) {
-                        set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC4_REVERSED');
-                        send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC4_REVERSED');
-                    } else {
-                    }
-                }, 3000);
+                //
+                // //     if (joystick_params.hasOwnProperty(param_idx)) {
+                // //         command_delay++;
+                // //         setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, joystick_params[param_idx]);
+                // //     }
+                // // }
+                // setTimeout(function () {
+                //     for (let param_idx = 1; param_idx < 17; param_idx++) {
+                //         if ((rc_map.hasOwnProperty(util.format('RC%s_MAX', param_idx).toLowerCase())) && rc_map.hasOwnProperty(util.format('RC%s_MIN', param_idx).toLowerCase()) && rc_map.hasOwnProperty(util.format('RC%s_TRIM', param_idx).toLowerCase())) {
+                //             // console.log(util.format('rc_map.[%s] = %d', joystick_params[param_idx].toLowerCase(), rc_map[joystick_params[param_idx].toLowerCase()]));
+                //         } else {
+                //             // console.log('one more send req message');
+                //             command_delay++;
+                //             setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MAX', param_idx));
+                //             setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_MIN', param_idx));
+                //             setTimeout(send_param_get_command, command_delay, config.drone, muv_sub_gcs_topic, drone_info.system_id, util.format('RC%s_TRIM', param_idx));
+                //         }
+                //     }
+                //
+                //     if (rc_map.rc1_reversed !== 0) {
+                //         set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC1_REVERSED');
+                //         send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC1_REVERSED');
+                //     } else {
+                //     }
+                //     if (rc_map.rc2_reversed !== 0) {
+                //         set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC2_REVERSED');
+                //         send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC2_REVERSED');
+                //     } else {
+                //     }
+                //     if (rc_map.rc3_reversed !== 0) {
+                //         set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC3_REVERSED');
+                //         send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC3_REVERSED');
+                //     } else {
+                //     }
+                //     if (rc_map.rc4_reversed !== 0) {
+                //         set_rc_reversed_param(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC4_REVERSED');
+                //         send_param_get_command(config.drone, muv_sub_gcs_topic, drone_info.system_id, 'RC4_REVERSED');
+                //     } else {
+                //     }
+                // }, 3000);
 
                 if (msw_mqtt_client != null) {
                     for (let i = 0; i < config.lib[idx].control.length; i++) {
@@ -404,7 +404,7 @@ function parseFcData(topic, str_message) {
 
 let MSW_mobius_mqtt_client = null;
 
-MSW_mobius_mqtt_connect(drone_info.host, 1883);
+MSW_mobius_mqtt_connect('203.253.128.177', 1883);
 
 function MSW_mobius_mqtt_connect(broker_ip, port) {
     if (MSW_mobius_mqtt_client == null) {
