@@ -150,9 +150,6 @@ function send_param_get_command(target_name, pub_topic, target_sys_id, param_id)
     }
 }
 
-let command_delay = 0;
-let status_flag = 0;  // 0 does not subscribe to remote topic, 1 subscribes to remote topic.
-
 function init() {
     if (config.lib.length > 0) {
         for (let idx in config.lib) {
@@ -301,23 +298,7 @@ function msw_mqtt_connect(broker_ip, port) {
             }
         }
 
-        if (topic === status_topic) {
-            if (message.toString() === 'ON') {
-                if (status_flag === 0) {
-                    msw_mqtt_client.subscribe(remote_topic);
-                    console.log('[msw_mqtt_connect] remote_topic : ' + remote_topic);
-                    status_flag = 1;
-                } else {
-                }
-            } else if (message.toString() === 'OFF') {
-                if (status_flag === 1) {
-                    msw_mqtt_client.unsubscribe(remote_topic);
-                    console.log('[msw_mqtt_connect] remote_topic : ' + remote_topic);
-                    status_flag = 0;
-                } else {
-                }
-            }
-        } else if (topic === remote_topic) {
+        if (topic === remote_topic) {
             on_receive_from_muv(topic, message.toString());
         }
     });
@@ -430,29 +411,12 @@ function MSW_mobius_mqtt_connect(broker_ip, port) {
             }
             if (remote_topic !== '') {
                 MSW_mobius_mqtt_client.subscribe(remote_topic);
-                status_flag = 1;
                 console.log('[msw_mobius_mqtt_subscribe] remote_topic : ' + remote_topic);
             }
         });
 
         MSW_mobius_mqtt_client.on('message', function (topic, message) {
-            if (topic === status_topic) {
-                if (message.toString() === 'ON') {
-                    if (status_flag === 0) {
-                        MSW_mobius_mqtt_client.subscribe(remote_topic);
-                        console.log('[msw_mobius_mqtt_subscribe] remote_topic : ' + remote_topic);
-                        status_flag = 1;
-                    } else {
-                    }
-                } else if (message.toString() === 'OFF') {
-                    if (status_flag === 1) {
-                        MSW_mobius_mqtt_client.unsubscribe(remote_topic);
-                        console.log('[msw_mobius_mqtt_unsubscribe] remote_topic : ' + remote_topic);
-                        status_flag = 0;
-                    } else {
-                    }
-                }
-            } else if (topic === remote_topic) {
+            if (topic === remote_topic) {
                 on_receive_from_muv(topic, message);
             }
         });

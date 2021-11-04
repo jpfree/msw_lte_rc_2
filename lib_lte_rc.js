@@ -631,7 +631,7 @@ function sbusData() {
     sbus.ch30 = ch30;
     sbus.ch31 = ch31;
     sbus.ch32 = ch32;
-    // lib_mqtt_client.publish(data_topic, JSON.stringify(sbus));
+    lib_mqtt_client.publish(data_topic, JSON.stringify(sbus));
 }
 
 sbusPortOpening();
