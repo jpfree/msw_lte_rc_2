@@ -6,9 +6,10 @@
 
 let mqtt = require('mqtt');
 let fs = require('fs');
-let my_msw_name = 'msw_lte_rc';
 let util = require('util');
 let { nanoid } = require('nanoid');
+
+let my_msw_name = 'msw_lte_rc_2';
 
 let fc = {};
 let config = {};
@@ -48,11 +49,12 @@ try {
 
 let add_lib = {};
 try {
-    console.log("Read JSON file");
     add_lib = JSON.parse(fs.readFileSync('./' + config.directory_name + '/lib_lte_rc.json', 'utf8'));
     config.lib.push(add_lib);
 } catch (e) {
+    console.log("=================================");
     console.log("Could not read JSON file in", config.directory_name);
+    console.log("=================================");
     add_lib = {
         name: 'lib_lte_rc',
         target: 'armv6',
