@@ -52,7 +52,7 @@ try {
     add_lib = JSON.parse(fs.readFileSync('./' + config.directory_name + '/lib_lte_rc.json', 'utf8'));
     config.lib.push(add_lib);
 } catch (e) {
-    console.log("can not read JSON file");
+    console.log("Could not read JSON file in", config.directory_name);
     add_lib = {
         name: 'lib_lte_rc',
         target: 'armv6',
