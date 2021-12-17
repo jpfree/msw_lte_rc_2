@@ -9,7 +9,7 @@ let fs = require('fs');
 let util = require('util');
 let { nanoid } = require('nanoid');
 
-let my_msw_name = 'msw_lte_rc_2';
+let my_msw_name = 'msw_lte_rc';
 
 let fc = {};
 let config = {};
